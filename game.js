@@ -505,7 +505,9 @@ class Game {
         // Show Break Visuals
         this.ui.avatarVis.style.opacity = '0';
         setTimeout(() => {
-            this.ui.patientImg.src = 'assets/doctor.png'; // Show Doctor
+            this.ui.patientImg.style.backgroundImage = "url('assets/p_doctor_stressed.jpg')"; // Show Stressed Doctor
+            this.ui.patientImg.style.backgroundPosition = 'center bottom';
+            this.ui.patientImg.style.backgroundSize = 'contain';
             this.ui.patientDialogue.textContent = "(대기 환자가 없습니다. 잠시 숨을 돌립니다...)";
             this.ui.choiceContainer.innerHTML = ''; // Clear choices
             this.ui.avatarVis.style.opacity = '1';
@@ -538,12 +540,26 @@ class Game {
                 this.ui.hintBubble.classList.add('hidden');
 
                 // Image Logic
-                if (scenario.image) {
-                    this.ui.patientImg.src = scenario.image;
+                // Image Logic
+                // Clear previous specific styles
+                this.ui.patientImg.style.backgroundPosition = '';
+                this.ui.patientImg.style.backgroundSize = '';
+
+                if (scenario.sprite) {
+                    this.ui.patientImg.style.backgroundImage = `url('${scenario.sprite.url}')`;
+                    this.ui.patientImg.style.backgroundPosition = scenario.sprite.pos || 'center';
+                    this.ui.patientImg.style.backgroundSize = scenario.sprite.size || 'cover';
+                } else if (scenario.image) {
+                    this.ui.patientImg.style.backgroundImage = `url('${scenario.image}')`;
+                    this.ui.patientImg.style.backgroundPosition = 'center bottom';
+                    this.ui.patientImg.style.backgroundSize = 'contain';
                 } else {
                     // Random Fallback Patient Image
                     const patients = ['assets/patient_angry.png', 'assets/patient_pleading.png', 'assets/patient_smart.png'];
-                    this.ui.patientImg.src = patients[Math.floor(Math.random() * patients.length)];
+                    const randImg = patients[Math.floor(Math.random() * patients.length)];
+                    this.ui.patientImg.style.backgroundImage = `url('${randImg}')`;
+                    this.ui.patientImg.style.backgroundPosition = 'center bottom';
+                    this.ui.patientImg.style.backgroundSize = 'contain';
                 }
 
                 // --- Update Chart ---

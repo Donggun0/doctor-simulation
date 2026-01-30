@@ -374,6 +374,128 @@ const scenarios = [
                 next: "next_random"
             }
         ]
+    }, // Added missing comma
+    // --- New Scenarios (Sprite Based) ---
+    // from chars_set_1.jpg (Doctor on left, 2x2 grid on right)
+    {
+        id: "vlogger_threat",
+        text: "원장님, 이거 녹음 중이니까 말조심하세요. 제 구독자가 10만이에요.",
+        narrator: "진료실 들어오자마자 스마트폰 렌즈를 들이댑니다.",
+        image: "assets/p_vlogger.jpg",
+        patientInfo: { bp: "120/80", hr: 90, bt: 36.5, history: "SNS 중독" },
+        choices: [
+            { label: "녹음은 불법이라고 경고한다", effect: { revenue: 0, mental: -10, satisfaction: -50, adminRisk: 0 }, log: "환자가 '갑질 병원'이라며 커뮤니티에 글을 올렸습니다." },
+            { label: "최대한 친절하게 비위만 맞춘다", effect: { revenue: 4000, mental: -20, satisfaction: 10, adminRisk: 0 }, log: "구독자들이 '원장님 착하시네' 댓글을 달아줬지만 멘탈이 갈렸습니다." },
+            { label: "방송 출연료 달라고 농담한다", effect: { revenue: 4000, mental: -5, satisfaction: 5, adminRisk: 0 }, log: "분위기가 애매해졌지만 진료는 마쳤습니다." }
+        ]
+    },
+    {
+        id: "hangover_iv",
+        text: "어제 회식해서 죽겠어요... 제일 비싼 수액 하나 놔주세요. 실비로.",
+        narrator: "술 냄새가 진동합니다. 숙취 해소 목적입니다.",
+        image: "assets/p_hangover.jpg",
+        patientInfo: { bp: "140/90", hr: 100, bt: 37.0, history: "알코올성 간질환 의심" },
+        choices: [
+            { label: "원하는 대로 고가 수액(10만원) 처방", effect: { revenue: 100000, mental: 0, satisfaction: 20, adminRisk: 30 }, log: "매출 대박! 하지만 실비 심사에서 걸릴 수도..." },
+            { label: "수액실 꽉 찼다고 거짓말한다", effect: { revenue: 4000, mental: 0, satisfaction: -10, adminRisk: 0 }, log: "다른 병원 가겠다며 나갔습니다." },
+            { label: "콩나물국밥 드시라고 조언한다", effect: { revenue: 0, mental: 5, satisfaction: -30, adminRisk: 0 }, log: "환자가 욕을 하며 나갔습니다." }
+        ]
+    },
+    {
+        id: "fake_holiday",
+        text: "저기, 제가 내일부터 휴가여서 그런데... 3일치 입원 확인서 좀...",
+        narrator: "하와이안 셔츠를 입고 있습니다. 누가 봐도 꾀병입니다.",
+        image: "assets/p_hawaiian.jpg",
+        patientInfo: { bp: "120/80", hr: 70, bt: 36.5, history: "건강함" },
+        choices: [
+            { label: "허위 진단서 발급 (30만원)", effect: { revenue: 300000, mental: 10, satisfaction: 100, adminRisk: 80 }, log: "유혹을 못 이기고 발급했습니다. 걸리면 면허 정지입니다." },
+            { label: "절대 안 된다고 쫓아낸다", effect: { revenue: 0, mental: 0, satisfaction: -50, adminRisk: 0 }, log: "당연한 처사입니다." },
+            { label: "휴식을 권고하는 소견서만 써준다", effect: { revenue: 10000, mental: -5, satisfaction: 10, adminRisk: 0 }, log: "타협했습니다." }
+        ]
+    },
+    // from chars_set_2.jpg (3x3 Grid)
+    {
+        id: "couple_checkup",
+        text: "영감 진료 보는 김에 나도 좀 봐줘요. 허리가 쑤셔서...",
+        narrator: "접수는 한 명만 했습니다. 1+1 진료를 요구합니다.",
+        image: "assets/p_couple.jpg",
+        patientInfo: { bp: "130/80", hr: 75, bt: 36.6, history: "만성 통증" },
+        choices: [
+            { label: "두 분 다 꼼꼼히 봐드린다", effect: { revenue: 4000, mental: -15, satisfaction: 30, adminRisk: 0 }, log: "시간이 두 배로 걸렸습니다." },
+            { label: "접수 먼저 하고 오시라고 한다", effect: { revenue: 8000, mental: -5, satisfaction: -10, adminRisk: 0 }, log: "정당한 수익을 챙겼습니다." },
+            { label: "지금은 접수된 분만 봅니다", effect: { revenue: 4000, mental: 0, satisfaction: -30, adminRisk: 0 }, log: "매정한 의사라고 소문이 날 겁니다." }
+        ]
+    },
+    {
+        id: "internet_mom",
+        text: "선생님, 이 약은 부작용이 많다던데 빼주세요. 제가 유튜브에서 공부했거든요.",
+        narrator: "유튜브 영상을 보여주며 항변합니다.",
+        image: "assets/p_mom.jpg",
+        patientInfo: { bp: "120/80", hr: 80, bt: 37.2, history: "유튜브 맹신" },
+        choices: [
+            { label: "어머니 말씀대로 빼드린다", effect: { revenue: 3000, mental: -10, satisfaction: 20, adminRisk: 5 }, log: "엄마의 마음은 편해졌습니다." },
+            { label: "전문가는 저라고 강하게 말한다", effect: { revenue: 3000, mental: -5, satisfaction: -40, adminRisk: 0 }, log: "맘카페에 불친절 후기가 올라올 것입니다." },
+            { label: "왜 그 약이 필요한지 30분 설명한다", effect: { revenue: 3000, mental: -20, satisfaction: 10, adminRisk: 0 }, log: "설득은 했지만 진이 다 빠졌습니다." }
+        ]
+    },
+    {
+        id: "gym_pain",
+        text: "어제 운동하다 가슴이 뻐근해서 왔어요. 파스나 주세요.",
+        narrator: "식은땀을 흘리고 있습니다. 심각해 보입니다.",
+        image: "assets/p_gym.jpg",
+        patientInfo: { bp: "150/95", hr: 110, bt: 36.8, history: "흡연자/고지혈증" },
+        choices: [
+            { label: "파스 처방해주고 보낸다", effect: { revenue: 4000, mental: 0, satisfaction: 10, adminRisk: 50 }, log: "환자는 그날 밤 응급실에 실려갔습니다." },
+            { label: "심전도 검사를 강력 권유한다", effect: { revenue: 15000, mental: -5, satisfaction: -10, adminRisk: 0 }, log: "심근경색 초기 발견! 생명을 구했습니다." },
+            { label: "근이완제 주사를 놔준다", effect: { revenue: 8000, mental: 0, satisfaction: 10, adminRisk: 30 }, log: "통증만 가렸습니다. 위험합니다." }
+        ]
+    },
+    {
+        id: "drug_requester",
+        text: "졸피뎀 좀 넉넉하게 주세요. 잠이 안 와서 미치겠어.",
+        narrator: "불안한 표정으로 약물 처방을 종용합니다.",
+        image: "assets/p_drug.jpg",
+        choices: [
+            { label: "규정대로만 준다", effect: { revenue: 5000, mental: -10, satisfaction: -10, adminRisk: 5 }, log: "환자가 투덜거립니다." },
+            { label: "단호하게 거절한다", effect: { revenue: 0, mental: -5, satisfaction: -40, adminRisk: 0 }, log: "욕설을 퍼부으며 나갔습니다." },
+            { label: "원하는 대로 다 준다", effect: { revenue: 15000, mental: 0, satisfaction: 40, adminRisk: 50 }, log: "수익은 냈지만 행정 리스크가 폭발했습니다." }
+        ]
+    },
+    {
+        id: "queue_rage",
+        text: "아니 대기 30분째인데 언제 불러요! 나 바쁜 사람이야!",
+        narrator: "진료실 문을 벌컥 열고 들어왔습니다. 매우 화가 나 있습니다.",
+        image: "assets/p_angry_man.jpg",
+        patientInfo: { bp: "160/100", hr: 120, bt: 37.0, history: "분노조절장애" },
+        choices: [
+            { label: "일단 사과하고 먼저 봐준다", effect: { revenue: 4000, mental: -20, satisfaction: 10, adminRisk: 0 }, log: "다른 대기 환자들이 항의하기 시작합니다." },
+            { label: "나가서 기다리라고 소리친다", effect: { revenue: 0, mental: -5, satisfaction: -50, adminRisk: 0 }, log: "환자와 멱살잡이 직전까지 갔습니다." },
+            { label: "간호사에게 방어템(진정)을 요청한다", effect: { revenue: 4000, mental: -10, satisfaction: -10, adminRisk: 0 }, log: "겨우 진정시켜 보냈습니다." }
+        ]
+    },
+    {
+        id: "old_man_fever",
+        text: "콜록... 열이 좀 나는 것 같은데... 기력이 하나도 없어요.",
+        narrator: "정말 아파 보입니다. 폐렴이 의심되는 노인 환자입니다.",
+        image: "assets/p_old_man.jpg",
+        patientInfo: { bp: "110/70", hr: 105, bt: 38.5, history: "만성 폐질환" },
+        choices: [
+            { label: "영양제 수액 놔드리고 보낸다", effect: { revenue: 50000, mental: 0, satisfaction: 20, adminRisk: 20 }, log: "수익은 냈지만, 밤새 악화될까 걱정입니다." },
+            { label: "정밀 검사 후 입원을 권유한다", effect: { revenue: 30000, mental: -5, satisfaction: 10, adminRisk: 0 }, log: "적절한 조치를 취했습니다." },
+            { label: "독감 검사부터 해본다", effect: { revenue: 30000, mental: 0, satisfaction: 5, adminRisk: 0 }, log: "A형 독감 확진!" }
+        ]
+    },
+    {
+        id: "mirror_self",
+        text: "거울 속의 내가 묻는다. '너... 괜찮니?'",
+        narrator: "거울 속 내 모습이 말이 아닙니다.",
+        image: "assets/p_doctor_stressed.jpg",
+        patientInfo: { bp: "???", hr: "???", bt: "36.5", history: "번아웃 위기" },
+        choices: [
+            { label: "찬물 세수하고 정신 차린다", effect: { revenue: 0, mental: 10, satisfaction: 0, adminRisk: 0 }, log: "다시 진료실로 향합니다." },
+            { label: "비상금으로 초콜릿을 사 먹는다", effect: { revenue: -2000, mental: 20, satisfaction: 0, adminRisk: 0 }, log: "당 충전 완료!" },
+            { label: "그냥 주저앉아 운다", effect: { revenue: 0, mental: -10, satisfaction: 0, adminRisk: 0 }, log: "조금은 후련합니다." }
+        ]
     }
 ];
 
