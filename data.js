@@ -7,6 +7,8 @@ const scenarios = [
         text: "선생님, 콧물이 좀 나고 머리가 띵해요. 주사 한 방 놔주세요.",
         narrator: "단순 감기다. 주사는 과잉진료지만 환자는 강력히 원한다.",
         patientInfo: {
+            age: 28,
+            gender: 'M',
             bp: "130/85",
             hr: 82,
             bt: 37.5,
@@ -24,6 +26,8 @@ const scenarios = [
         narrator: "혈압이 160/100이다. 파스가 문제가 아니다!",
         image: "assets/patient_pleading.png", // Fallback to pleading
         patientInfo: {
+            age: 55,
+            gender: 'M',
             bp: "160/100", // High
             hr: 88,
             bt: 36.8,
@@ -40,6 +44,8 @@ const scenarios = [
         text: "목이 너무 부었어요. 항생제 센 걸로 주세요. 회사 가야 해요.",
         narrator: "차트를 보자. 페니실린 쇼크 이력이 있다.",
         patientInfo: {
+            age: 34,
+            gender: 'F',
             bp: "120/80",
             hr: 90,
             bt: 38.2,
@@ -56,6 +62,8 @@ const scenarios = [
         text: "혈압약 먹던 거 그대로 3개월치 주세요. 바빠 죽겠는데 무슨 혈압을 또 재요? 그냥 줘요!",
         narrator: "환자 얼굴이 붉다. 혈압이 꽤 높아 보이는데 측정을 거부한다.",
         patientInfo: {
+            age: 62,
+            gender: 'M',
             bp: "???/???", // Unknown unless measured
             hr: 90,
             bt: 37.1,
@@ -73,6 +81,8 @@ const scenarios = [
         narrator: "혈압이 200/110mmHg. 고혈압 응급(Hypertensive Emergency) 수준이다. 일하다 터진다.",
         image: "assets/patient_angry.png", // Fixed image path
         patientInfo: {
+            age: 45,
+            gender: 'M',
             bp: "200/110",
             hr: 110,
             bt: 37.2,
@@ -89,6 +99,8 @@ const scenarios = [
         text: "회사 제출용 진단서 하나 끊어주세요. 3일 쉬어야 한다고요.",
         narrator: "멀쩡해 보인다. 그냥 쉬고 싶은 모양이다.",
         patientInfo: {
+            age: 26,
+            gender: 'F',
             bp: "115/75",
             hr: 70,
             bt: 36.5,
@@ -109,6 +121,8 @@ const scenarios = [
         narrator: "환자가 졸피뎀 처방을 강하게 요구합니다. 중복 처방 이력이 보입니다.",
         image: "assets/patient_pleading.png",
         patientInfo: {
+            age: 38,
+            gender: 'F',
             bp: "135/85",
             hr: 92,
             bt: 36.6,
@@ -145,6 +159,8 @@ const scenarios = [
         narrator: "전형적인 바이러스성 감기 증상입니다. 항생제는 필요 없습니다.",
         image: "assets/patient_angry.png",
         patientInfo: {
+            age: 33,
+            gender: 'F',
             bp: "120/80",
             hr: 95,
             bt: 38.2, // Fever
@@ -180,6 +196,8 @@ const scenarios = [
         narrator: "수액실은 개인 공간이라 CCTV 설치가 불법입니다 (또는 없습니다).",
         image: "assets/patient_recording.png",
         patientInfo: {
+            age: 42,
+            gender: 'M',
             bp: "140/90", // Angry
             hr: 100,
             bt: 36.5,
@@ -215,6 +233,8 @@ const scenarios = [
         narrator: "열도 없고 기침도 없습니다. 검사가 불필요해 보입니다.",
         image: "assets/patient_pleading.png",
         patientInfo: {
+            age: 27,
+            gender: 'F',
             bp: "110/70",
             hr: 65,
             bt: 36.4, // Not sick
@@ -250,6 +270,8 @@ const scenarios = [
         narrator: "혈압이 160/100입니다. 이 상태에서 처방은 매우 위험합니다.",
         image: "assets/patient_pleading.png",
         patientInfo: {
+            age: 39,
+            gender: 'F',
             bp: "160/100", // CONTRAINDICATION
             hr: 88,
             bt: 36.7,
@@ -285,6 +307,8 @@ const scenarios = [
         narrator: "AI 진단을 맹신하며 스마트폰을 눈앞에 들이밉니다.",
         image: "assets/patient_smart.png",
         patientInfo: {
+            age: 25,
+            gender: 'M',
             bp: "120/80",
             hr: 75,
             bt: 36.5,
@@ -320,6 +344,8 @@ const scenarios = [
         narrator: "아들은 30세 성인입니다. 위임장 없이는 발급 불가능합니다.",
         image: "assets/patient_pleading.png",
         patientInfo: {
+            age: 58,
+            gender: 'F',
             bp: "125/80",
             hr: 70,
             bt: 36.2,
@@ -354,6 +380,7 @@ const scenarios = [
         text: "비급여 주사 맞을 건데, 좀 깎아줘요. 단골이잖아.",
         narrator: "비급여 할인은 환자 유인 행위로 불법 소지가 있습니다.",
         image: "assets/patient_angry.png",
+        patientInfo: { age: 65, gender: 'M', bp: "130/80", hr: 75, bt: 36.5, history: "단골 환자" },
         choices: [
             {
                 label: "딱 잘라서 안 된다고 거절한다",

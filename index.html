@@ -198,6 +198,44 @@
                     <button id="restart-btn" class="primary-btn">다시 시작하기</button>
                 </div>
             </div>
+            <!-- Admin Mode Overlay -->
+            <div id="admin-mode-overlay" class="hidden">
+                <div class="admin-panel">
+                    <div class="admin-header">
+                        <h2>🛠️ 시나리오 편집기 (Admin)</h2>
+                        <button id="close-admin">X</button>
+                    </div>
+                    <div class="admin-content">
+                        <div class="scenario-list-panel">
+                            <h3>Case List</h3>
+                            <ul id="admin-scenario-list"></ul>
+                            <button id="add-scenario-btn" class="secondary-btn">+ New Case</button>
+                        </div>
+                        <div class="editor-panel">
+                            <h3>Editor</h3>
+                            <div id="editor-form">
+                                <label>ID: <input type="text" id="edit-id" readonly></label>
+                                <label>Image Path: <input type="text" id="edit-image"></label>
+                                <label>Dialog: <textarea id="edit-text"></textarea></label>
+                                <label>Age: <input type="number" id="edit-age"></label>
+                                <label>Gender: <select id="edit-gender">
+                                        <option value="M">M</option>
+                                        <option value="F">F</option>
+                                    </select></label>
+                                <div class="vitals-edit">
+                                    <label>BP: <input type="text" id="edit-bp"></label>
+                                    <label>HR: <input type="number" id="edit-hr"></label>
+                                    <label>BT: <input type="number" step="0.1" id="edit-bt"></label>
+                                </div>
+                                <div class="admin-actions">
+                                    <button id="save-scenario-btn" class="primary-btn">저장 (LocalStorage)</button>
+                                    <button id="export-data-btn" class="secondary-btn">데이터 추출 (JSON)</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script src="data.js"></script>

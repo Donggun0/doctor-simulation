@@ -142,6 +142,7 @@ class Game {
 
         this.updateUI(false);
         this.updateWaitingUI();
+        this.initAdminMode();
 
         this.ui.overlay.classList.add('hidden');
         this.ui.hintBubble.classList.add('hidden');
@@ -679,6 +680,132 @@ class Game {
 
         this.updateResources(choice.effect);
         setTimeout(() => this.nextTurn(), 2000);
+    }
+
+
+    // --- Admin Mode Logic ---
+    initAdminMode() {
+        this.adminState = {
+            isOpen: false,
+            editingCase: null,
+            customScenarios: JSON.parse(localStorage.getItem('custom_scenarios') || '[]')
+        };
+
+        // Combine default and custom scenarios
+        this.allScenarios = [...scenarios, ...this.adminState.customScenarios];
+
+        // Access via Shortcut: Shift + Alt + A
+        window.addEventListener('keydown', (e) => {
+            if (e.shiftKey && e.altKey && e.code === 'KeyA') {
+                this.toggleAdminMode();
+            }
+        });
+
+        // Close Btn
+        document.getElementById('close-admin').onclick = () => this.toggleAdminMode();
+
+        // Save Btn
+        document.getElementById('save-scenario-btn').onclick = () => this.saveEditedScenario();
+
+        // Add Btn
+        document.getElementById('add-scenario-btn').onclick = () => this.addNewScenario();
+
+        // Export Btn
+        document.getElementById('export-data-btn').onclick = () => this.exportScenarioData();
+
+        this.refreshAdminScenarioList();
+    }
+
+    toggleAdminMode() {
+        this.adminState.isOpen = !this.adminState.isOpen;
+        const overlay = document.getElementById('admin-mode-overlay');
+        if (this.adminState.isOpen) {
+            overlay.classList.remove('hidden');
+            this.refreshAdminScenarioList();
+        } else {
+            overlay.classList.add('hidden');
+        }
+    }
+
+    refreshAdminScenarioList() {
+        const listEl = document.getElementById('admin-scenario-list');
+        listEl.innerHTML = '';
+        this.allScenarios.forEach(s => {
+            const li = document.createElement('li');
+            li.textContent = `[${s.id}] ${s.text.substring(0, 20)}...`;
+            li.onclick = () => this.loadScenarioToEditor(s.id);
+            listEl.appendChild(li);
+        });
+    }
+
+    loadScenarioToEditor(sid) {
+        const s = this.allScenarios.find(item => item.id === sid);
+        if (!s) return;
+
+        this.adminState.editingCase = s;
+        document.getElementById('edit-id').value = s.id;
+        document.getElementById('edit-image').value = s.image || '';
+        document.getElementById('edit-text').value = s.text || '';
+        document.getElementById('edit-age').value = s.patientInfo?.age || '';
+        document.getElementById('edit-gender').value = s.patientInfo?.gender || 'M';
+        document.getElementById('edit-bp').value = s.patientInfo?.bp || '';
+        document.getElementById('edit-hr').value = s.patientInfo?.hr || '';
+        document.getElementById('edit-bt').value = s.patientInfo?.bt || '';
+    }
+
+    saveEditedScenario() {
+        if (!this.adminState.editingCase) return;
+
+        const updated = {
+            ...this.adminState.editingCase,
+            image: document.getElementById('edit-image').value,
+            text: document.getElementById('edit-text').value,
+            patientInfo: {
+                age: parseInt(document.getElementById('edit-age').value),
+                gender: document.getElementById('edit-gender').value,
+                bp: document.getElementById('edit-bp').value,
+                hr: parseInt(document.getElementById('edit-hr').value),
+                bt: parseFloat(document.getElementById('edit-bt').value)
+            }
+        };
+
+        // Update in allScenarios
+        const idx = this.allScenarios.findIndex(s => s.id === updated.id);
+        this.allScenarios[idx] = updated;
+
+        // Save custom ones to LocalStorage
+        const customs = this.allScenarios.filter(s => !scenarios.find(orig => orig.id === s.id));
+        localStorage.setItem('custom_scenarios', JSON.stringify(customs));
+
+        alert('저장되었습니다. (현재 세션 및 LocalStorage)');
+        this.refreshAdminScenarioList();
+    }
+
+    addNewScenario() {
+        const newId = 'custom_' + Date.now();
+        const newCase = {
+            id: newId,
+            image: "sprite_patient_m_01",
+            text: "새로운 환자 시나리오입니다.",
+            patientInfo: { age: 30, gender: "M", bp: "120/80", hr: 72, bt: 36.5 },
+            choices: [
+                { text: "옵션 1", effect: { hp: 0, mental: 0, revenue: 10000, satisfaction: 5 } },
+                { text: "옵션 2", effect: { hp: -5, mental: -5, revenue: 50000, satisfaction: -10 } }
+            ]
+        };
+        this.allScenarios.push(newCase);
+        this.refreshAdminScenarioList();
+        this.loadScenarioToEditor(newId);
+    }
+
+    exportScenarioData() {
+        const dataStr = "const scenarios = " + JSON.stringify(this.allScenarios, null, 4) + ";";
+        const blob = new Blob([dataStr], { type: 'text/javascript' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'data.js';
+        a.click();
     }
 
     triggerEnding(type) {
