@@ -461,7 +461,8 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    /* Ensure contents pin to top */
     padding: 1rem;
     gap: 1rem;
     overflow-y: auto;
@@ -499,7 +500,7 @@ main {
     align-items: flex-end;
     height: 100%;
     /* Fill height */
-    overflow: hidden;
+    /* overflow: hidden; -- Removed to prevent clipping timer/effects */
 }
 
 /* Right Column: Info */
@@ -512,14 +513,31 @@ main {
     padding-top: 20px;
 }
 
-.timer-bar-container {
+.timer-wrapper {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 6px;
-    background: rgba(0, 0, 0, 0.5);
+    top: -25px;
+    /* Move above the character image */
+    left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     z-index: 20;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.timer-hourglass {
+    font-size: 1.2rem;
+}
+
+.timer-bar-container {
+    width: 100px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
 }
 
 .timer-fill {
@@ -726,6 +744,8 @@ footer {
     padding: 1.5rem;
     background: rgba(30, 30, 30, 0.95);
     border-top: 1px solid #333;
+    min-height: 160px;
+    /* Reserve space for buttons to prevent layout jumps */
 }
 
 .choices-container {

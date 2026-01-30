@@ -499,8 +499,12 @@ class Game {
     }
 
     startBreak() {
-        this.stopTurnTimer();
+        if (this.timer) clearInterval(this.timer);
         this.isProcessing = true;
+
+        // Hide Timer during break
+        const timerWrapper = document.querySelector('.timer-wrapper');
+        if (timerWrapper) timerWrapper.style.opacity = '0';
 
         // Show Break Visuals
         this.ui.avatarVis.style.opacity = '0';
@@ -509,7 +513,26 @@ class Game {
             this.ui.patientImg.style.backgroundPosition = 'center bottom';
             this.ui.patientImg.style.backgroundSize = 'contain';
             this.ui.patientDialogue.textContent = "(대기 환자가 없습니다. 잠시 숨을 돌립니다...)";
-            this.ui.choiceContainer.innerHTML = ''; // Clear choices
+
+            // Add Dummy Buttons to stabilize layout
+            this.ui.choiceContainer.innerHTML = '';
+            const breakChoices = [
+                { label: "기지개를 켠다", msg: "으차차... 몸이 천근만근이네." },
+                { label: "한숨을 내쉰다", msg: "하아... 점심 먹을 시간이나 있으려나." }
+            ];
+
+            breakChoices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = choice.label;
+                btn.onclick = () => {
+                    this.ui.patientDialogue.textContent = `\"${choice.msg}\"`;
+                    btn.disabled = true;
+                    btn.style.opacity = '0.5';
+                };
+                this.ui.choiceContainer.appendChild(btn);
+            });
+
             this.ui.avatarVis.style.opacity = '1';
 
             // Recover Stats
@@ -520,15 +543,16 @@ class Game {
             this.ui.hintBubble.classList.remove('hidden');
         }, 300);
 
-        // Auto-resume after 3 seconds
-        setTimeout(() => {
-            // Force add patient if still empty
+        // Auto-resume after 4 seconds (longer for players to read/click)
+        if (this.breakTimer) clearTimeout(this.breakTimer);
+        this.breakTimer = setTimeout(() => {
+            if (timerWrapper) timerWrapper.style.opacity = '1';
             if (this.waitingList.length === 0) {
                 this.addPatient();
             }
             this.isProcessing = false;
             this.nextTurn();
-        }, 3000);
+        }, 4000);
     }
 
     renderScenario(scenario, patient) {
@@ -573,14 +597,17 @@ class Game {
                 const chartHistory = document.getElementById('p-history');
 
                 if (chartName) {
-                    const pName = patient ? (patient.name || "Unknown") : "환자";
-                    const pInfo = patient ? `(${patient.gender || '?'}/${patient.age || '?'})` : "";
-
-                    chartName.textContent = pName;
-                    chartInfo.textContent = pInfo;
-
                     // Use Scenario Specific Data OR Random Defaults
                     const info = scenario.patientInfo || {};
+
+                    // Prioritize scenario data for visual consistency (especially age/gender)
+                    const pName = patient ? (patient.name || "Unknown") : "환자";
+                    const pGender = info.gender || (patient ? (patient.gender || '?') : '?');
+                    const pAge = info.age || (patient ? (patient.age || '?') : '?');
+                    const pInfoStr = `(${pGender}/${pAge})`;
+
+                    chartName.textContent = pName;
+                    chartInfo.textContent = pInfoStr;
 
                     // Vitals Logic
                     const bp = info.bp || "120/80";
