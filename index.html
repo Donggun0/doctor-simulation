@@ -24,7 +24,22 @@
             </ul>
             <div class="wr-status" id="wr-status">평화롭습니다</div>
 
-            <!-- Moved Patient Chart Here -->
+            <!-- Doctor Avatar Moved Here -->
+            <div class="doctor-sidebar-container">
+                <div class="doctor-avatar-container" id="doctor-container">
+                    <img src="assets/doctor.png" alt="Doctor" id="doctor-img">
+                    <div id="doctor-emoji" class="reaction-emoji">💬</div>
+                    <div id="hint-bubble" class="hidden">힌트...</div>
+                </div>
+                <div class="doctor-info-mini">
+                    <div class="revenue-display">
+                        <span id="revenue-amount">0</span>
+                        <span class="currency">₩</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient Chart Here -->
             <div class="patient-chart" id="sidebar-chart">
                 <div class="chart-header">
                     <span id="p-name">-</span>
@@ -46,26 +61,14 @@
             <header>
                 <div class="top-bar">
                     <div class="header-left">
-                        <div class="doctor-avatar-container" id="doctor-container">
-                            <img src="assets/doctor.png" alt="Doctor" id="doctor-img">
-                            <div id="doctor-emoji" class="reaction-emoji">💬</div>
-                            <div id="hint-bubble" class="hidden">힌트...</div>
-                        </div>
-                    </div>
-                    <div class="header-center">
-                        <div class="revenue-display">
-                            <span class="label">수익</span>
-                            <span id="revenue-amount">0</span>
-                            <span class="currency">₩</span>
-                        </div>
+                        <h1>의사 해보던가 <span class="day-counter">Day <span id="day-display">1</span></span></h1>
                     </div>
                     <div class="header-right">
                         <div class="goal-display">
-                            <span class="goal-label">진료목표</span>
+                            <span class="goal-label">오늘의 진료</span>
                             <span id="patient-count">0</span> / <span id="goal-count">20</span>
                         </div>
                         <button id="tutorial-btn" class="icon-btn" aria-label="Tutorial">❓</button>
-                        <div class="day-counter">Day <span id="day-display">1</span></div>
                     </div>
                 </div>
 
@@ -226,6 +229,12 @@
                                     <label>BP: <input type="text" id="edit-bp"></label>
                                     <label>HR: <input type="number" id="edit-hr"></label>
                                     <label>BT: <input type="number" step="0.1" id="edit-bt"></label>
+                                </div>
+                                <div class="choices-edit-panel">
+                                    <h3>Choices & Effects</h3>
+                                    <div id="edit-choices-list">
+                                        <!-- Dynamic rows for choices -->
+                                    </div>
                                 </div>
                                 <div class="admin-actions">
                                     <button id="save-scenario-btn" class="primary-btn">저장 (LocalStorage)</button>

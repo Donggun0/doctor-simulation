@@ -50,8 +50,11 @@ body {
     flex-direction: column;
     padding: 1rem;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-    /* Contain inner scroll */
+    overflow: visible;
+    /* Changed from hidden to allow bubble */
+    position: relative;
+    z-index: 50;
+    /* Ensure sidebar is above main content for overlays */
 }
 
 .wr-header {
@@ -110,7 +113,47 @@ body {
     font-size: 0.85rem;
     text-align: center;
     color: #00b894;
-    /* Peaceful green */
+    margin-bottom: 10px;
+}
+
+.doctor-sidebar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 0;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    margin-bottom: 15px;
+}
+
+.doctor-info-mini {
+    text-align: center;
+}
+
+.doctor-info-mini .revenue-display {
+    background: transparent;
+    padding: 0;
+    font-size: 1.2rem;
+}
+
+/* Adjust patient list for better scrolling */
+.patient-list {
+    flex: 1 1 200px;
+    overflow-y: auto;
+    list-style: none;
+    margin-bottom: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: #444 transparent;
+}
+
+.patient-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.patient-list::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 3px;
 }
 
 /* App Container Sizing */
@@ -218,29 +261,34 @@ header {
 /* Hint Bubble */
 #hint-bubble {
     position: absolute;
-    top: 70px;
-    left: 10px;
-    background: #fff;
-    color: #000;
-    padding: 10px;
+    bottom: 80px;
+    left: 40px;
+    /* Shifted right to talk towards the game */
+    background: #ffffff;
+    color: #1a1a1a;
+    padding: 15px;
     border-radius: 12px;
-    border-top-left-radius: 0;
-    width: 250px;
-    font-size: 0.85rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    z-index: 200;
-    line-height: 1.4;
-    animation: fadeIn 0.2s ease;
+    width: 240px;
+    /* Slightly wider */
+    font-size: 0.95rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    /* Super high to be over everything */
+    line-height: 1.5;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid var(--accent-teal);
+    pointer-events: none;
 }
 
 #hint-bubble::after {
     content: '';
     position: absolute;
-    top: -10px;
-    left: 0;
-    border-width: 0 10px 10px 0;
+    bottom: -12px;
+    left: 30px;
+    /* Point to the avatar */
+    border-width: 12px 12px 0 12px;
     border-style: solid;
-    border-color: transparent #fff transparent transparent;
+    border-color: var(--accent-teal) transparent transparent transparent;
 }
 
 .revenue-display {
@@ -1315,6 +1363,36 @@ footer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+}
+
+.choices-edit-panel {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #333;
+}
+
+.choices-edit-panel h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.choice-edit-row {
+    background: #252525;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    border: 1px solid #333;
+}
+
+.effects-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.effects-grid input {
+    width: 100%;
 }
 
 .admin-actions {

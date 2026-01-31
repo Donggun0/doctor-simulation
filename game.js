@@ -210,6 +210,15 @@ class Game {
     startInflux() {
         if (this.influxTimer) clearInterval(this.influxTimer);
         this.influxTimer = setInterval(() => {
+            // Stop adding if goal reached
+            if (this.patientsSeen >= this.breakEvenGoal) {
+                clearInterval(this.influxTimer);
+                this.influxTimer = null;
+                this.ui.wrStatus.textContent = "🛑 오늘 진료 접수가 마감되었습니다.";
+                this.ui.wrStatus.style.color = '#fdcb6e';
+                return;
+            }
+
             // Randomly add patient every 3-7 seconds
             if (Math.random() > 0.3) { // 70% chance
                 this.addPatient();
@@ -515,24 +524,38 @@ class Game {
             this.ui.patientImg.style.backgroundSize = 'contain';
             this.ui.patientDialogue.textContent = "(대기 환자가 없습니다. 잠시 숨을 돌립니다...)";
 
-            // Add Dummy Buttons to stabilize layout
+            // Add Choices
             this.ui.choiceContainer.innerHTML = '';
-            const breakChoices = [
-                { label: "기지개를 켠다", msg: "으차차... 몸이 천근만근이네." },
-                { label: "한숨을 내쉰다", msg: "하아... 점심 먹을 시간이나 있으려나." }
-            ];
 
-            breakChoices.forEach(choice => {
-                const btn = document.createElement('button');
-                btn.className = 'choice-btn';
-                btn.textContent = choice.label;
-                btn.onclick = () => {
-                    this.ui.patientDialogue.textContent = `\"${choice.msg}\"`;
-                    btn.disabled = true;
-                    btn.style.opacity = '0.5';
+            if (this.patientsSeen >= this.breakEvenGoal) {
+                const finishBtn = document.createElement('button');
+                finishBtn.className = 'choice-btn primary-btn';
+                finishBtn.style.textAlign = 'center';
+                finishBtn.style.backgroundColor = '#00b894';
+                finishBtn.style.color = 'white';
+                finishBtn.innerHTML = "🏁 오늘의 진료 마무리하기 (퇴근)";
+                finishBtn.onclick = () => {
+                    this.triggerEnding('survival');
                 };
-                this.ui.choiceContainer.appendChild(btn);
-            });
+                this.ui.choiceContainer.appendChild(finishBtn);
+            } else {
+                const breakChoices = [
+                    { label: "기지개를 켠다", msg: "으차차... 몸이 천근만근이네." },
+                    { label: "한숨을 내쉰다", msg: "하아... 점심 먹을 시간이나 있으려나." }
+                ];
+
+                breakChoices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice-btn';
+                    btn.textContent = choice.label;
+                    btn.onclick = () => {
+                        this.ui.patientDialogue.textContent = `"${choice.msg}"`;
+                        btn.disabled = true;
+                        btn.style.opacity = '0.5';
+                    };
+                    this.ui.choiceContainer.appendChild(btn);
+                });
+            }
 
             this.ui.avatarVis.style.opacity = '1';
 
@@ -544,9 +567,14 @@ class Game {
             this.ui.hintBubble.classList.remove('hidden');
         }, 300);
 
-        // Auto-resume after 4 seconds (longer for players to read/click)
+        // Auto-resume if needed
         if (this.breakTimer) clearTimeout(this.breakTimer);
         this.breakTimer = setTimeout(() => {
+            // If goal reached and no one is waiting, stay in break (Wait for user to click Finish or more to arrive if influx still active)
+            if (this.patientsSeen >= this.breakEvenGoal && this.waitingList.length === 0) {
+                return;
+            }
+
             if (timerWrapper) timerWrapper.style.opacity = '1';
             if (this.waitingList.length === 0) {
                 this.addPatient();
@@ -823,6 +851,12 @@ class Game {
             const risk = this.resources.adminRisk;
             const satisfaction = this.resources.satisfaction;
 
+            if (this.patientsSeen >= this.breakEvenGoal) {
+                evaluation += "✅ 오늘의 진료 목표(20명)를 달성하셨습니다!\n";
+            } else {
+                evaluation += "⚠️ 목표 인원을 다 채우지 못하고 퇴근하셨습니다.\n";
+            }
+
             if (revenue > 80000 && risk > 40) {
                 evaluation += "🤑 타락한 자본주의자\n(돈은 벌었지만 교도소 담장 위를 걷고 계시네요)";
             } else if (revenue < 30000 && satisfaction > 70) {
@@ -833,7 +867,8 @@ class Game {
                 evaluation += "😐 평범한 소시민 의사\n(오늘도 무사히 넘긴 것에 감사합니다)";
             }
 
-            evaluation += `\n\n최종 수익: ₩${revenue.toLocaleString()}`;
+            evaluation += `\n\n최종 진료 인원: ${this.patientsSeen}명`;
+            evaluation += `\n최종 수익: ₩${revenue.toLocaleString()}`;
         } else if (type === 'burnout') {
             evaluation += "💀 과로사 직전\n(다음 생엔 건물주로 태어나세요)";
         } else if (type === 'lawsuit') {
