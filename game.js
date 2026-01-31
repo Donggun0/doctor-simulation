@@ -292,10 +292,8 @@ class Game {
         const notif = document.createElement('div');
         notif.className = 'floating-log';
         notif.textContent = `📢 ${p.name}님이 기다리다 지쳐 집에 갔습니다!`;
-        notif.style.color = 'red';
-        notif.style.width = '300px';
-        notif.style.left = '50%';
-        notif.style.marginLeft = '-150px';
+        notif.style.color = '#ff6b6b';
+        notif.style.fontSize = '1.2rem';
         this.ui.avatarVis.appendChild(notif);
         setTimeout(() => notif.remove(), 2000);
     }

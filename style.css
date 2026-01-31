@@ -170,8 +170,8 @@ body {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     border: 1px solid #333;
     border-radius: 12px;
-    overflow: hidden;
-    /* Clip children */
+    overflow: visible;
+    /* Allow children to pop out (e.g., floating text) */
 }
 
 /* Mobile Responsiveness */
@@ -1078,8 +1078,10 @@ footer {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     pointer-events: none;
     animation: floatUp 1.5s forwards;
-    z-index: 50;
-    width: 100%;
+    z-index: 2000;
+    /* High z-index to stay above sidebar */
+    width: 90%;
+    max-width: 400px;
     text-align: center;
 }
 
