@@ -722,6 +722,10 @@ class Game {
         // Combine default and custom scenarios
         this.allScenarios = [...scenarios, ...this.adminState.customScenarios];
 
+        // Access via Button
+        const adminBtn = document.getElementById('admin-btn');
+        if (adminBtn) adminBtn.onclick = () => this.toggleAdminMode();
+
         // Access via Shortcut: Shift + Alt + A
         window.addEventListener('keydown', (e) => {
             if (e.shiftKey && e.altKey && e.code === 'KeyA') {
@@ -779,10 +783,42 @@ class Game {
         document.getElementById('edit-bp').value = s.patientInfo?.bp || '';
         document.getElementById('edit-hr').value = s.patientInfo?.hr || '';
         document.getElementById('edit-bt').value = s.patientInfo?.bt || '';
+
+        // Load Choices
+        const choicesListEl = document.getElementById('edit-choices-list');
+        choicesListEl.innerHTML = '';
+        (s.choices || []).forEach((c, idx) => {
+            const row = document.createElement('div');
+            row.className = 'choice-edit-row';
+            row.innerHTML = `
+                <label>Choice ${idx + 1} Text: <input type="text" class="edit-choice-text" value="${c.text}"></label>
+                <div class="effects-grid">
+                    <label>HP: <input type="number" class="edit-eff-hp" value="${c.effect.hp || 0}"></label>
+                    <label>Mental: <input type="number" class="edit-eff-m" value="${c.effect.mental || 0}"></label>
+                    <label>Risk: <input type="number" class="edit-eff-r" value="${c.effect.adminRisk || 0}"></label>
+                    <label>Satisf: <input type="number" class="edit-eff-s" value="${c.effect.satisfaction || 0}"></label>
+                    <label>Rev: <input type="number" class="edit-eff-v" value="${c.effect.revenue || 0}"></label>
+                </div>
+            `;
+            choicesListEl.appendChild(row);
+        });
     }
 
     saveEditedScenario() {
         if (!this.adminState.editingCase) return;
+
+        // Collect Choices
+        const choiceRows = document.querySelectorAll('.choice-edit-row');
+        const updatedChoices = Array.from(choiceRows).map(row => ({
+            text: row.querySelector('.edit-choice-text').value,
+            effect: {
+                hp: parseInt(row.querySelector('.edit-eff-hp').value),
+                mental: parseInt(row.querySelector('.edit-eff-m').value),
+                adminRisk: parseInt(row.querySelector('.edit-eff-r').value),
+                satisfaction: parseInt(row.querySelector('.edit-eff-s').value),
+                revenue: parseInt(row.querySelector('.edit-eff-v').value)
+            }
+        }));
 
         const updated = {
             ...this.adminState.editingCase,
@@ -794,7 +830,8 @@ class Game {
                 bp: document.getElementById('edit-bp').value,
                 hr: parseInt(document.getElementById('edit-hr').value),
                 bt: parseFloat(document.getElementById('edit-bt').value)
-            }
+            },
+            choices: updatedChoices
         };
 
         // Update in allScenarios
