@@ -185,14 +185,41 @@ body {
     .waiting-room {
         width: 100%;
         height: auto;
-        max-height: 150px;
-        /* Collapsed view */
+        max-height: 120px;
         border-radius: 0;
         border-bottom: 1px solid #444;
         order: -1;
-        /* Show on top */
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .waiting-room .wr-header,
+    .waiting-room .doctor-sidebar-container,
+    .waiting-room .patient-chart,
+    .waiting-room .wr-status {
         display: none;
-        /* Hide by default on mobile for now, or toggle? */
+    }
+
+    .waiting-room .patient-list {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        flex-grow: 1;
+        margin-bottom: 0;
+        overflow-y: hidden;
+        overflow-x: auto;
+    }
+
+    .waiting-room .patient-list li {
+        white-space: nowrap;
+        border-bottom: none;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 5px 12px;
+        border-radius: 15px;
     }
 
     /* Let's keep it simple: On mobile maybe just simple text? 
@@ -731,7 +758,8 @@ main {
 
     .img-column {
         width: 100%;
-        height: 40vh;
+        height: 50vh;
+        min-height: 300px;
     }
 
     .info-column {
@@ -764,21 +792,22 @@ main {
         gap: 0;
     }
 
-    .img-container {
-        flex: 2;
-        /* More space for img */
+    .img-column {
+        flex: 3;
         width: 100%;
+        height: 45vh;
     }
 
     .dialogue-box {
-        position: absolute;
-        bottom: 10px;
-        width: 90%;
-        margin-bottom: 0;
-        background: rgba(255, 255, 255, 0.9);
-        min-height: auto;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        margin-bottom: 15px;
+        background: rgba(255, 255, 255, 0.95);
+        min-height: 120px;
         padding: 1rem;
-        flex: 0;
+        flex: none;
+        z-index: 5;
     }
 
     .dialogue-box::before {
