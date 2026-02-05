@@ -243,20 +243,22 @@ body {
         border: 1px solid #444;
     }
 
-    /* Mobile Side-by-Side Chart */
-    #game-stage .patient-chart {
-        position: relative;
-        left: 0;
-        top: 0;
-        width: 50%;
-        height: 100%;
-        margin-left: 10px;
-        padding: 12px;
+    /* Fixed Mobile Chart next to Photo */
+    #sidebar-chart {
+        visibility: visible;
+        display: block !important;
+        position: fixed;
+        top: 105px;
+        /* Just below header */
+        right: 15px;
+        width: 45%;
+        height: 35vh;
+        z-index: 1000;
+        padding: 10px;
+        font-size: 0.85rem;
         background: #fff;
         border: 2px solid #00b894;
-        border-radius: 8px;
-        font-size: 0.85rem;
-        box-shadow: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     }
 
     .patient-chart .chart-body {
@@ -295,11 +297,12 @@ body {
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        padding-bottom: 50px;
-        /* Space for bottom bar */
+        padding-bottom: 70px;
+        /* More space for bottom bar */
     }
 
     header {
+        height: 100px;
         padding: 5px 12px;
         background: rgba(30, 30, 30, 0.95);
         border-bottom: 1px solid #333;
@@ -497,6 +500,24 @@ body {
 
     .status-board.compact .fill.warning {
         background: #fdcb6e;
+    }
+
+    /* Patient Chart (Medical Record) */
+    .patient-chart {
+        position: absolute;
+        top: 40px;
+        /* Below Timer */
+        left: 10px;
+        background: #fff;
+        color: #000;
+        padding: 1.2rem;
+        border-radius: 8px;
+        border-left: 5px solid var(--accent-teal);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        font-family: monospace;
+        font-size: 0.95rem;
+        z-index: 10;
+        pointer-events: none;
     }
 
     /* Desktop Sidebar Chart Adjustment */
@@ -882,24 +903,20 @@ body {
     /* Mobile Override */
     @media (max-width: 600px) {
         .patient-visual {
+            display: flex;
             flex-direction: row;
-            /* Side-by-side */
-            height: 38vh;
-            /* Shrunk for vertical space */
-            align-items: stretch;
-            margin-bottom: 8px;
+            height: 35vh;
+            margin-bottom: 5px;
         }
 
         .img-column {
-            flex: 1;
-            width: 45%;
+            width: 50%;
             height: 100%;
-            min-height: auto;
         }
 
         .info-column {
-            display: none;
-            /* Info column is now empty in mobile since we moved dialogue */
+            display: block;
+            flex: 1;
         }
 
         /* Wrap image and chart and then dialogue */
@@ -912,17 +929,16 @@ body {
         .dialogue-box {
             position: relative;
             width: 100%;
-            margin-top: 5px;
-            margin-bottom: 5px;
             background: #fff;
             min-height: 80px;
-            /* Restored some height */
-            height: auto;
-            max-height: 100px;
-            /* Cap it to prevent push-off */
             padding: 12px;
             border: 2px solid #00b894;
             font-size: 0.9rem;
+            color: #000;
+            z-index: 5;
+            height: auto;
+            max-height: 100px;
+            /* Cap it to prevent push-off */
             display: flex;
             /* Ensure content shows */
             flex-direction: column;
