@@ -858,6 +858,8 @@ body {
             width: 100%;
             flex: 1;
             padding-top: 10px;
+            display: block;
+            /* Ensure visibility */
         }
     }
 
@@ -897,7 +899,7 @@ body {
 
         .info-column {
             display: none;
-            /* We use the chart instead of info column mostly */
+            /* Info column is now empty in mobile since we moved dialogue */
         }
 
         /* Wrap image and chart and then dialogue */
@@ -913,11 +915,18 @@ body {
             margin-top: 5px;
             margin-bottom: 5px;
             background: #fff;
-            min-height: 70px;
+            min-height: 80px;
+            /* Restored some height */
             height: auto;
-            padding: 10px;
+            max-height: 100px;
+            /* Cap it to prevent push-off */
+            padding: 12px;
             border: 2px solid #00b894;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            display: flex;
+            /* Ensure content shows */
+            flex-direction: column;
+            justify-content: center;
         }
 
         #patient-dialogue {
