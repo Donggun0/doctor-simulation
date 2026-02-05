@@ -39,22 +39,6 @@
                 </div>
             </div>
 
-            <!-- Patient Chart Here -->
-            <div class="patient-chart" id="sidebar-chart">
-                <div class="chart-header">
-                    <span id="p-name">-</span>
-                    <span id="p-info">(-/-)</span>
-                </div>
-                <div class="chart-body">
-                    <div class="vital-row"><span class="label">BP</span> <span id="p-bp" class="val">-/-</span></div>
-                    <div class="vital-row"><span class="label">HR</span> <span id="p-hr" class="val">-</span></div>
-                    <div class="vital-row"><span class="label">BT</span> <span id="p-bt" class="val">-</span></div>
-                    <div class="history-row">
-                        <span class="label">특이사항</span>
-                        <span id="p-history" class="val warning-text">-</span>
-                    </div>
-                </div>
-            </div>
         </aside>
 
         <div class="app-container">
@@ -113,6 +97,26 @@
                             </div>
                         </div>
                         <div id="patient-img" class="character-img" role="img" aria-label="Patient Character"></div>
+                    </div>
+
+                    <!-- Patient Chart -->
+                    <div class="patient-chart" id="sidebar-chart">
+                        <div class="chart-header">
+                            <span id="p-name">-</span>
+                            <span id="p-info">(-/-)</span>
+                        </div>
+                        <div class="chart-body">
+                            <div class="vital-row"><span class="label">BP</span> <span id="p-bp" class="val">-/-</span>
+                            </div>
+                            <div class="vital-row"><span class="label">HR</span> <span id="p-hr" class="val">-</span>
+                            </div>
+                            <div class="vital-row"><span class="label">BT</span> <span id="p-bt" class="val">-</span>
+                            </div>
+                            <div class="history-row">
+                                <span class="label">특이사항</span>
+                                <span id="p-history" class="val warning-text">-</span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Right Column: Chart & Dialogue -->
