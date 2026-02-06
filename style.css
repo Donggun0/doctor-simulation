@@ -164,14 +164,13 @@ body {
     background-color: var(--card-bg);
     display: flex;
     flex-direction: column;
-    /* Stack children vertically */
     height: 100%;
     position: relative;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     border: 1px solid #333;
     border-radius: 12px;
     overflow: visible;
-    /* Allow children to pop out (e.g., floating text) */
+    /* CRITICAL: Allow chart to stick out on PC */
 }
 
 /* Mobile Responsiveness */
@@ -243,22 +242,22 @@ body {
         border: 1px solid #444;
     }
 
-    /* Fixed Mobile Chart next to Photo */
+    /* Mobile Side-by-Side Chart - Proper Flex */
     #sidebar-chart {
         visibility: visible;
         display: block !important;
-        position: fixed;
-        top: 105px;
-        /* Just below header */
-        right: 15px;
-        width: 45%;
-        height: 35vh;
-        z-index: 1000;
+        position: relative;
+        /* Not fixed */
+        top: auto;
+        right: auto;
+        width: 50%;
+        height: 100%;
+        z-index: 5;
         padding: 10px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         background: #fff;
         border: 2px solid #00b894;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        box-shadow: none;
     }
 
     .patient-chart .chart-body {
@@ -297,8 +296,8 @@ body {
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        padding-bottom: 70px;
-        /* More space for bottom bar */
+        padding-bottom: 60px;
+        /* Adjust to match bottom bar height */
     }
 
     header {
@@ -502,50 +501,24 @@ body {
         background: #fdcb6e;
     }
 
-    /* Patient Chart (Medical Record) */
+    /* Patient Chart - Default PC Style (Absolute Position in Sidebar) */
     .patient-chart {
         position: absolute;
-        top: 40px;
-        /* Below Timer */
-        left: 10px;
+        top: 365px;
+        /* Manually tuned to look like it's in the sidebar */
+        left: -270px;
+        /* Offset to the left of app-container */
         background: #fff;
         color: #000;
         padding: 1.2rem;
         border-radius: 8px;
-        border-left: 5px solid var(--accent-teal);
+        width: 250px;
+        z-index: 10;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         font-family: monospace;
         font-size: 0.95rem;
-        z-index: 10;
-        pointer-events: none;
-    }
-
-    /* Desktop Sidebar Chart Adjustment */
-    #game-stage .patient-chart {
-        position: absolute;
-        left: -270px;
-        /* Position it back to where the sidebar used to have it */
-        top: 410px;
-        width: 250px;
-    }
-
-    /* Patient Chart */
-    .patient-chart {
-        position: absolute;
-        top: 40px;
-        /* Below Timer */
-        left: 10px;
-        background: rgba(255, 255, 255, 0.9);
-        color: #000;
-        padding: 10px;
-        border-radius: 8px;
-        width: 140px;
-        z-index: 10;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        font-size: 0.8rem;
-        pointer-events: none;
-        /* Let clicks pass through */
-        border: 1px solid #ccc;
+        pointer-events: auto;
+        border-left: 5px solid var(--accent-teal);
     }
 
     .chart-header {
@@ -644,38 +617,30 @@ body {
     /* Main Stage */
     main {
         flex: 1;
-        /* Take remaining space */
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        /* Ensure contents pin to top */
         padding: 1rem;
-        gap: 1rem;
-        overflow-y: auto;
-        /* Scroll if too tall */
+        gap: 0.5rem;
+        /* Tighter gap */
+        overflow: visible;
+        /* IMPORTANT for PC chart absolute positioning */
         position: relative;
         z-index: 1;
         min-height: 0;
-        /* Important for flex nesting */
     }
 
     .patient-visual {
-        transition: opacity 0.5s ease;
         width: 100%;
         max-width: 900px;
-        flex-grow: 1;
-        position: relative;
-        margin: 0;
-        background: transparent;
-        box-shadow: none;
+        height: 35vh;
+        /* Fixed height ratio */
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: stretch;
-        /* Stretch to equal height */
-        padding-top: 10px;
-        gap: 20px;
+        padding: 0;
+        gap: 10px;
+        margin-bottom: 5px;
     }
 
     /* Left Column: Image */
@@ -903,15 +868,20 @@ body {
     /* Mobile Override */
     @media (max-width: 600px) {
         .patient-visual {
+            height: 32vh;
+            /* Slightly smaller to ensure dialogue visibility */
             display: flex;
             flex-direction: row;
-            height: 35vh;
             margin-bottom: 5px;
         }
 
         .img-column {
-            width: 50%;
+            width: 48%;
             height: 100%;
+        }
+
+        #sidebar-chart {
+            width: 48%;
         }
 
         .info-column {
