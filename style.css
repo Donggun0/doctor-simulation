@@ -8,10 +8,10 @@
     --accent-red: #d63031;
     --accent-yellow: #fdcb6e;
     --bar-bg: #2d3436;
-
     --font-main: 'Noto Sans KR', sans-serif;
 }
 
+/* Base Resets */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -23,67 +23,71 @@ body {
     background-color: var(--bg-color);
     color: var(--text-primary);
     font-family: var(--font-main);
-    display: flex;
-    justify-content: center;
     height: 100vh;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .game-wrapper {
     display: flex;
     gap: 20px;
-    align-items: flex-start;
-    justify-content: center;
-    height: 100vh;
-    padding: 20px;
     width: 100%;
+    max-width: 1200px;
+    /* Allow more space on PC */
+    height: 95vh;
+    justify-content: center;
+    align-items: stretch;
+    padding: 20px;
 }
 
-/* Sidebar (Waiting Room) */
+/* Sidebar (Waiting Room) - PC */
 .waiting-room {
-    width: 250px;
+    width: 260px;
     background: var(--card-bg);
     border: 1px solid #333;
     border-radius: 12px;
-    height: 100%;
-    max-height: 800px;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    overflow: visible;
-    position: relative;
-    z-index: 50;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 10;
 }
 
 .wr-header {
-    border-bottom: 1px solid #444;
-    padding-bottom: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.wr-header h2 {
-    font-size: 1.1rem;
-    color: var(--accent-teal);
-}
-
-.wr-count {
-    font-size: 0.9rem;
-    font-weight: 700;
-}
-
-.patient-list {
-    flex-grow: 1;
-    overflow-y: auto;
-    list-style: none;
+    border-bottom: 2px solid #444;
+    padding-bottom: 0.8rem;
     margin-bottom: 1rem;
 }
 
+.wr-header h2 {
+    font-size: 1.2rem;
+    color: var(--accent-teal);
+    margin-bottom: 4px;
+}
+
+.wr-count {
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+.patient-list {
+    flex: 1;
+    overflow-y: auto;
+    list-style: none;
+}
+
 .patient-list li {
-    padding: 0.5rem;
+    padding: 0.8rem;
     border-bottom: 1px solid #333;
-    font-size: 0.9rem;
     color: var(--text-secondary);
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.patient-list li:hover {
+    background: #2d3436;
 }
 
 .patient-list li.urgent {
@@ -92,65 +96,63 @@ body {
 }
 
 .wr-status {
+    margin-top: 10px;
+    padding: 8px;
     background: #2d3436;
-    padding: 0.5rem;
     border-radius: 6px;
-    font-size: 0.85rem;
     text-align: center;
-    color: #00b894;
-    margin-bottom: 10px;
+    color: var(--accent-teal);
+    font-size: 0.85rem;
 }
 
-/* App Container */
+/* App Container - PC */
 .app-container {
-    width: 100%;
-    max-width: 500px;
-    background-color: var(--card-bg);
+    flex: 1;
+    max-width: 800px;
+    /* Wider for PC */
+    background: var(--card-bg);
+    border: 1px solid #333;
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     position: relative;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    border: 1px solid #333;
-    border-radius: 12px;
     overflow: visible;
-    /* CRITICAL for side-poking chart on PC */
+    /* CRITICAL for absolute chart positioning */
 }
 
 /* Header & Stats */
 header {
-    padding: 12px 15px;
-    background: rgba(30, 30, 30, 0.95);
+    padding: 15px 20px;
     border-bottom: 1px solid #333;
-    z-index: 10;
+    background: rgba(30, 30, 30, 0.8);
 }
 
 .top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 12px;
 }
 
-.status-board.compact {
+.status-board {
     display: flex;
     justify-content: space-between;
-    gap: 8px;
-    padding: 4px 0;
+    gap: 15px;
 }
 
 .stat-item {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
     flex: 1;
 }
 
 .mini-bar {
-    flex-grow: 1;
-    height: 6px;
+    flex: 1;
+    height: 8px;
     background: #444;
-    border-radius: 3px;
+    border-radius: 4px;
     overflow: hidden;
 }
 
@@ -160,35 +162,41 @@ header {
     transition: width 0.3s ease;
 }
 
-/* Main Gameplay Area */
+.fill.warning {
+    background: var(--accent-yellow);
+}
+
+.fill.risk {
+    background: var(--accent-red);
+}
+
+/* Main Stage - PC */
 main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
-    gap: 15px;
+    padding: 20px;
+    gap: 20px;
     position: relative;
-    overflow: visible;
 }
 
 .patient-visual {
     width: 100%;
-    height: 300px;
-    /* Default height for PC */
+    height: 350px;
+    /* Substantial height for PC */
     display: flex;
     flex-direction: row;
+    /* Default row */
     gap: 20px;
     position: relative;
 }
 
 .img-column {
     flex: 1;
-    height: 100%;
-    position: relative;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
 }
 
 .character-img {
@@ -197,36 +205,59 @@ main {
     background-repeat: no-repeat;
     background-position: center bottom;
     background-size: contain;
+    z-index: 1;
+    display: block !important;
+    /* Ensure visible */
 }
 
-/* PC Side-Chart Position */
+/* PC Side Chart Fix */
 .patient-chart {
     position: absolute;
-    top: 360px;
-    /* Aligned with sidebar area on PC */
-    left: -270px;
-    width: 250px;
+    top: 380px;
+    /* Positioned relative to app-container indirectly if parent is main */
+    left: -280px;
+    /* Align with sidebar area */
+    width: 240px;
     background: #fff;
     color: #000;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    border-left: 5px solid var(--accent-teal);
+    padding: 1.2rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border-left: 6px solid var(--accent-teal);
     z-index: 100;
     font-family: monospace;
-    font-size: 0.9rem;
 }
 
 .chart-header {
     border-bottom: 2px solid #333;
-    padding-bottom: 4px;
-    margin-bottom: 8px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
     font-weight: bold;
     display: flex;
     justify-content: space-between;
 }
 
-/* Dialogue Box */
+.chart-body {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.vital-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.vital-row .label {
+    color: #666;
+    font-weight: bold;
+}
+
+.vital-row .val {
+    font-weight: bold;
+}
+
+/* Dialogue Panel - PC */
 .info-column {
     flex: 1;
     display: flex;
@@ -235,77 +266,67 @@ main {
 
 .dialogue-box {
     background: #fff;
-    color: #000;
-    padding: 1.2rem;
+    color: #1a1a1a;
+    padding: 1.5rem;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    min-height: 120px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    min-height: 140px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 #patient-dialogue {
-    font-size: 1.1rem;
-    font-weight: 600;
-    line-height: 1.4;
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 1.5;
 }
 
 .narrator-box {
-    margin-top: 8px;
-    font-size: 0.85rem;
     font-style: italic;
-    color: #666;
+    color: #777;
+    margin-top: 10px;
+    border-top: 1px solid #efefef;
+    padding-top: 8px;
 }
 
 /* Footer & Choices */
 footer {
-    padding: 15px;
-    background: rgba(30, 30, 30, 0.95);
+    padding: 20px;
+    background: rgba(30, 30, 30, 0.9);
     border-top: 1px solid #333;
 }
 
 .choices-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .choice-btn {
     background: #2d3436;
     border: 1px solid #444;
     color: #fff;
-    padding: 0.8rem 1rem;
+    padding: 1rem;
     border-radius: 8px;
     cursor: pointer;
     text-align: left;
+    transition: all 0.2s;
 }
 
-/* Timer */
-.timer-wrapper {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 4px 10px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    z-index: 10;
+.choice-btn:hover {
+    background: #3d4548;
+    border-color: var(--accent-teal);
 }
 
-.timer-bar-container {
-    width: 60px;
-    height: 4px;
-    background: #444;
-}
-
-/* --- MOBILE OVERRIDES (max-width: 600px) --- */
-@media (max-width: 600px) {
+/* --- MOBILE OPTIMIZATION --- */
+@media (max-width: 800px) {
     .game-wrapper {
         padding: 0;
+        height: 100vh;
+        width: 100vw;
         flex-direction: column;
+        gap: 0;
     }
 
     .waiting-room {
@@ -314,10 +335,11 @@ footer {
         position: fixed;
         bottom: 0;
         left: 0;
-        flex-direction: row;
         border-radius: 0;
+        flex-direction: row;
         padding: 5px 10px;
-        z-index: 200;
+        z-index: 1000;
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5);
     }
 
     .waiting-room .wr-header,
@@ -326,16 +348,39 @@ footer {
         display: none;
     }
 
+    .waiting-room .patient-list {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+        margin: 0;
+    }
+
+    .waiting-room .patient-list li {
+        white-space: nowrap;
+        padding: 5px 12px;
+        background: #222;
+        border-radius: 15px;
+        border: 1px solid #444;
+    }
+
     .app-container {
         height: 100vh;
         max-width: none;
+        border: none;
+        border-radius: 0;
         padding-bottom: 60px;
     }
 
-    /* Core Mobile Layout Fix: side-by-side photo and chart */
+    /* Core Side-by-Side Mobile Fix */
     .patient-visual {
         height: 35vh;
-        gap: 10px;
+        /* Enough height for visible content */
+        display: flex !important;
+        flex-direction: row !important;
+        /* Force side-by-side */
+        gap: 12px;
+        margin-bottom: 10px;
     }
 
     .img-column {
@@ -351,17 +396,22 @@ footer {
         height: 100% !important;
         margin: 0 !important;
         box-shadow: none !important;
+        background: #fff;
+        padding: 10px !important;
+        font-size: 0.8rem !important;
+        border-radius: 8px !important;
     }
 
     .info-column {
-        flex: none;
+        flex: 1;
         width: 100%;
     }
 
     .dialogue-box {
-        min-height: 80px;
-        max-height: 120px;
-        padding: 10px;
+        padding: 12px;
+        min-height: 100px;
+        max-height: 140px;
+        border: 2px solid var(--accent-teal);
     }
 
     #patient-dialogue {
@@ -369,117 +419,81 @@ footer {
     }
 
     header {
-        padding: 8px 12px;
+        padding: 10px 15px;
+    }
+
+    .top-bar {
+        margin-bottom: 8px;
+    }
+
+    .stat-item .mini-bar {
+        height: 6px;
     }
 }
 
-/* Animations & Modals (General) */
+/* Modals & Effects */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 5000;
 }
 
 .modal {
     background: #2d3436;
     padding: 2rem;
-    border-radius: 12px;
-    text-align: center;
+    border-radius: 16px;
+    border: 1px solid var(--accent-teal);
     max-width: 90%;
-}
-
-.intro-doctor-img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 3px solid var(--accent-teal);
-    margin-bottom: 15px;
-    object-fit: cover;
-    background: #000;
-}
-
-.intro-text p {
-    margin-bottom: 12px;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #cbd5e0;
-}
-
-.intro-text .highlight {
-    font-size: 1.1rem;
     color: #fff;
-    font-weight: bold;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-left: 4px solid var(--accent-red);
 }
 
-.intro-text .accent {
-    color: var(--accent-red);
-    font-size: 1.4rem;
-    font-weight: 800;
+.hidden {
+    display: none !important;
 }
 
-.pulse {
-    animation: pulseBtn 2s infinite;
-}
-
-@keyframes pulseBtn {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(0, 184, 148, 0.7);
-    }
-
-    70% {
-        transform: scale(1.05);
-        box-shadow: 0 0 0 10px rgba(0, 184, 148, 0);
-    }
-
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(0, 184, 148, 0);
-    }
-}
-
-/* Tutorial & Ending */
-.tutorial-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin: 20px 0;
-    text-align: left;
-}
-
-.t-item {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 12px;
-    border-radius: 8px;
+/* Existing components restored */
+.timer-wrapper {
+    position: absolute;
+    top: 10px;
+    left: 10px;
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 4px 12px;
+    border-radius: 20px;
 }
 
-/* Admin Panel Styles */
+.timer-bar-container {
+    width: 80px;
+    height: 5px;
+    background: #444;
+    border-radius: 3px;
+}
+
+.timer-fill {
+    height: 100%;
+    background: var(--accent-teal);
+    width: 100%;
+}
+
+/* Admin & Misc */
 .admin-panel {
     background: #1e1e1e;
-    width: 90%;
-    max-width: 1000px;
+    width: 95%;
     height: 90%;
-    border-radius: 12px;
     display: flex;
     flex-direction: column;
+    border-radius: 12px;
     overflow: hidden;
-    border: 2px solid #444;
 }
 
 .admin-header {
@@ -487,7 +501,6 @@ footer {
     padding: 1rem;
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
 .admin-content {
@@ -497,18 +510,9 @@ footer {
 }
 
 .scenario-list-panel {
-    width: 300px;
+    width: 30%;
     border-right: 1px solid #333;
     padding: 1rem;
-    display: flex;
-    flex-direction: column;
-}
-
-#admin-scenario-list {
-    flex: 1;
-    overflow-y: auto;
-    list-style: none;
-    margin: 1rem 0;
 }
 
 .editor-panel {
@@ -524,26 +528,37 @@ footer {
 }
 
 #editor-form input,
-#editor-form textarea,
-#editor-form select {
+#editor-form textarea {
     background: #2d3436;
     border: 1px solid #444;
     color: #fff;
-    padding: 8px;
+    padding: 10px;
 }
 
-.vitals-edit {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* PC specific Waiting room hover and list */
-.patient-list li:hover {
-    background: #2d3436;
+.primary-btn {
+    background: var(--accent-teal);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
     cursor: pointer;
+    font-weight: bold;
+}
+
+.pulse {
+    animation: pulseAnim 2s infinite;
+}
+
+@keyframes pulseAnim {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
