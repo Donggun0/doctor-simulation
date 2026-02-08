@@ -239,13 +239,12 @@ main {
     /* Ensure visible */
 }
 
-/* PC Side Chart Fix */
+/* PC Side Chart Fix - Lowered to avoid sidebar overlap */
 .patient-chart {
     position: absolute;
-    top: 380px;
-    /* Positioned relative to app-container indirectly if parent is main */
+    top: 480px;
+    /* Moved down significantly */
     left: -280px;
-    /* Align with sidebar area */
     width: 240px;
     background: #fff;
     color: #000;
@@ -395,14 +394,33 @@ footer {
 
     .app-container {
         height: 100vh;
+        /* Fill viewport */
+        height: 100dvh;
+        /* Dynamic viewport for modern mobile browsers */
         max-width: none;
         border: none;
         border-radius: 0;
-        padding-bottom: 60px;
+        padding-bottom: 80px;
+        /* Extra space for bottom fixed waiting bar */
+        overflow: hidden;
+        /* Main container fixed, internal scroll */
+    }
+
+    main {
         overflow-y: auto;
-        /* Enable vertical scrolling for content > 100vh */
+        /* Scrollable main area */
         -webkit-overflow-scrolling: touch;
-        /* Smooth scrolling on iOS */
+        flex: 1;
+        /* Take remaining space */
+        padding-bottom: 20px;
+    }
+
+    footer {
+        flex-shrink: 0;
+        /* Keep footer from shrinking */
+        background: #1e1e1e;
+        /* Ensure background covers content */
+        z-index: 20;
     }
 
     /* Core Side-by-Side Mobile Fix */
