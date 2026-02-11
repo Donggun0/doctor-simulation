@@ -207,7 +207,8 @@ main {
     gap: 20px;
     position: relative;
     overflow-y: auto;
-    /* Enable scroll on PC if content is too much */
+    min-height: 0;
+    /* Essential for flexbox scrolling */
 }
 
 .patient-visual {
@@ -240,11 +241,11 @@ main {
     /* Ensure visible */
 }
 
-/* PC Side Chart Fix - Lowered to avoid sidebar overlap */
+/* PC Side Chart Fix - Positioned to side of app-container */
 .patient-chart {
     position: absolute;
-    top: 480px;
-    /* Moved down significantly */
+    top: 340px;
+    /* Moved up from 480px to avoid bottom clipping */
     left: -280px;
     width: 240px;
     background: #fff;
@@ -324,6 +325,8 @@ footer {
     padding: 20px;
     background: rgba(30, 30, 30, 0.9);
     border-top: 1px solid #333;
+    flex-shrink: 0;
+    /* Prevent choice area from being squashed */
 }
 
 .choices-container {
