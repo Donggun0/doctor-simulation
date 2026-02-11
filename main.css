@@ -30,26 +30,26 @@ body {
     align-items: center;
 }
 
-/* Game Layout - PC (3 Columns) */
+/* Game Layout - PC (3 Columns Flex) */
 .game-wrapper {
     display: flex;
-    gap: 25px;
+    gap: 20px;
     width: 100%;
     max-width: 1300px;
     height: 96vh;
     justify-content: center;
     align-items: stretch;
-    padding: 20px;
+    padding: 10px;
 }
 
 .waiting-room {
-    width: 260px;
+    width: 250px;
     background: var(--card-bg);
     border: 1px solid #333;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 1rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     z-index: 10;
     flex-shrink: 0;
@@ -208,10 +208,10 @@ body {
 
 /* Header & Stats */
 header {
-    padding: 10px 20px;
-    /* Reduced padding */
+    padding: 8px 15px;
     border-bottom: 1px solid #333;
     background: rgba(30, 30, 30, 0.8);
+    flex-shrink: 0;
 }
 
 .top-bar {
@@ -261,18 +261,19 @@ main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 15px 20px;
-    gap: 12px;
+    padding: 10px 15px;
+    /* Thinner padding */
+    gap: 8px;
+    /* Thinner gap */
     position: relative;
     overflow-y: auto;
-    /* Central content scrolls if needed */
     -webkit-overflow-scrolling: touch;
 }
 
 .patient-visual {
     width: 100%;
-    height: 320px;
-    /* Reduced to fit better vertically on PC */
+    height: 280px;
+    /* Reduced for vertical fit on PC */
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -299,20 +300,21 @@ main {
     /* Ensure visible */
 }
 
-/* Patient Chart - Positioned as sidebar on PC */
+/* Patient Chart - Side column on PC */
 .patient-chart {
-    position: absolute;
-    left: calc(100% + 40px);
-    top: -50px;
-    width: 260px;
+    width: 250px;
     background: #fff;
     color: #000;
-    padding: 1.25rem;
+    padding: 1rem;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     border-left: 6px solid var(--accent-teal);
-    z-index: 20;
+    z-index: 10;
     font-family: monospace;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 80px;
+    /* Aligned with header line */
 }
 
 .chart-header {
@@ -354,10 +356,10 @@ main {
 .dialogue-box {
     background: #fff;
     color: #1a1a1a;
-    padding: 1.25rem;
+    padding: 1rem;
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    min-height: 100px;
+    min-height: 80px;
     /* Reduced for vertical fit */
     display: flex;
     flex-direction: column;
@@ -417,7 +419,7 @@ footer {
 }
 
 /* --- MOBILE OPTIMIZATION --- */
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
     .game-wrapper {
         padding: 0;
         height: 100vh;
@@ -429,19 +431,16 @@ footer {
 
     .waiting-room {
         width: 100%;
-        height: 60px;
+        height: 50px;
         flex-shrink: 0;
-        background: var(--card-bg);
-        border: none;
-        border-bottom: 1px solid #333;
-        padding: 5px 15px;
+        background: #1a1a1a;
+        padding: 0 15px;
         border-radius: 0;
         flex-direction: row;
         display: flex;
         align-items: center;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        order: 1;
-        /* Keep at top */
+        order: -1;
+        border-bottom: 1px solid #333;
     }
 
     .waiting-room .wr-header,
@@ -456,7 +455,6 @@ footer {
         gap: 8px;
         margin: 0;
         overflow-x: auto;
-        padding: 5px 0;
     }
 
     .app-container {
@@ -464,52 +462,73 @@ footer {
         max-width: 100%;
         border-radius: 0;
         border: none;
-        order: 2;
-        /* Middle */
         overflow: hidden;
     }
 
+    header {
+        padding: 5px 10px;
+    }
+
+    .top-bar h1 {
+        font-size: 1rem;
+    }
+
+    .status-board {
+        gap: 5px;
+    }
+
     main {
-        padding: 10px;
-        gap: 10px;
+        padding: 8px;
+        gap: 8px;
         overflow-y: auto;
     }
 
     .patient-visual {
-        height: auto;
-        min-height: 200px;
+        height: 160px;
+        /* Highly compact row */
+        display: flex !important;
         flex-direction: row !important;
-        gap: 10px;
+        gap: 8px;
     }
 
     .img-column {
-        flex: 1.2;
-        width: auto;
+        flex: 1;
     }
 
     .patient-chart {
-        position: static !important;
-        flex: 1;
-        width: auto !important;
-        padding: 10px !important;
+        width: 150px;
+        flex-shrink: 0;
+        padding: 8px !important;
         margin-top: 0 !important;
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         box-shadow: none;
-        background: rgba(255, 255, 255, 0.95);
-        border-left: 3px solid var(--accent-teal);
-        height: min-content;
+        background: #fff;
+        height: 100%;
+        border-radius: 8px;
+        overflow-y: auto;
     }
 
     .dialogue-box {
-        min-height: 80px;
-        padding: 12px;
-        max-height: none;
+        min-height: 60px;
+        padding: 8px;
+    }
+
+    #patient-dialogue {
+        font-size: 0.95rem;
     }
 
     footer {
-        order: 3;
-        /* Bottom */
-        padding: 10px 15px;
+        padding: 5px 10px;
+        background: #222;
+    }
+
+    .choices-container {
+        max-height: 120px;
+    }
+
+    .choice-btn {
+        padding: 0.5rem 0.8rem !important;
+        font-size: 0.85rem !important;
     }
 }
 
