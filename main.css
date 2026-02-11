@@ -35,13 +35,10 @@ body {
     gap: 30px;
     width: 100%;
     max-width: 1300px;
-    /* Slightly wider to accommodate side elements */
     height: 95vh;
     justify-content: center;
     align-items: stretch;
     padding: 20px;
-    flex-direction: row;
-    /* Default PC row */
 }
 
 /* Sidebar (Waiting Room) - PC */
@@ -55,8 +52,6 @@ body {
     padding: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     z-index: 10;
-    order: 2;
-    /* Move waiting room to the RIGHT of app-container on PC */
 }
 
 .wr-header {
@@ -142,8 +137,6 @@ body {
 .app-container {
     flex: 1;
     max-width: 500px;
-    order: 1;
-    /* Main content in middle */
     background: var(--card-bg);
     border: 1px solid #333;
     border-radius: 16px;
@@ -158,7 +151,8 @@ body {
 
 /* Header & Stats */
 header {
-    padding: 15px 20px;
+    padding: 10px 20px;
+    /* Reduced padding */
     border-bottom: 1px solid #333;
     background: rgba(30, 30, 30, 0.8);
 }
@@ -210,17 +204,18 @@ main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    gap: 20px;
+    padding: 15px 20px;
+    /* Reduced padding */
+    gap: 12px;
+    /* Reduced gap */
     position: relative;
     overflow: visible;
-    /* CRITICAL: prevent clipping of absolute sidebar chart */
 }
 
 .patient-visual {
     width: 100%;
-    height: 400px;
-    /* Reduced to ensure choices aren't cut off */
+    height: 320px;
+    /* Further reduced to guarantee choice visibility */
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -247,11 +242,12 @@ main {
 }
 
 /* PC Side Chart Fix - Moved to the LEFT side relative to app-container (middle) */
+/* PC Side Chart Fix - Positioned to the RIGHT to clear the waiting room */
 .patient-chart {
     position: absolute;
-    top: 280px;
-    left: -285px;
-    /* Stand to the LEFT of the main middle container */
+    top: 250px;
+    right: -285px;
+    /* Stand to the RIGHT of the main middle container */
     width: 260px;
     background: #fff;
     color: #000;
@@ -341,7 +337,11 @@ footer {
 .choices-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
+    max-height: 220px;
+    /* Prevent overflow if too many choices */
+    overflow-y: auto;
+    padding-right: 5px;
 }
 
 .choice-btn {
