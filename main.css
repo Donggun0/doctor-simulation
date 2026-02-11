@@ -30,18 +30,18 @@ body {
     align-items: center;
 }
 
+/* Game Layout - PC (3 Columns) */
 .game-wrapper {
     display: flex;
-    gap: 30px;
+    gap: 25px;
     width: 100%;
     max-width: 1300px;
-    height: 95vh;
+    height: 96vh;
     justify-content: center;
     align-items: stretch;
     padding: 20px;
 }
 
-/* Sidebar (Waiting Room) - PC */
 .waiting-room {
     width: 260px;
     background: var(--card-bg);
@@ -52,6 +52,7 @@ body {
     padding: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     z-index: 10;
+    flex-shrink: 0;
 }
 
 .wr-header {
@@ -104,15 +105,23 @@ body {
     font-size: 0.85rem;
 }
 
-/* PC Sidebar Doctor Avatar Styling */
-.doctor-avatar-container {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto;
+/* Doctor Side Area */
+.doctor-sidebar-container {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #333;
     position: relative;
-    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.doctor-avatar-container {
+    width: 64px;
+    height: 64px;
+    position: relative;
     border: 2px solid var(--accent-teal);
-    overflow: hidden;
+    border-radius: 50%;
     background: #000;
 }
 
@@ -120,17 +129,65 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    border-radius: 50%;
+}
+
+.reaction-emoji {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background: #fff;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    z-index: 5;
+    border: 1px solid #ddd;
+}
+
+#hint-bubble {
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1a1a;
+    border: 2px solid var(--accent-teal);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    z-index: 100;
+    line-height: 1.4;
+    pointer-events: none;
+}
+
+#hint-bubble::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px solid transparent;
+    border-top-color: var(--accent-teal);
 }
 
 .doctor-info-mini {
     text-align: center;
     margin-top: 10px;
+    width: 100%;
 }
 
 .doctor-info-mini .revenue-display {
     justify-content: center;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 /* App Container - PC */
@@ -144,8 +201,8 @@ body {
     flex-direction: column;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     position: relative;
-    overflow: visible;
-    /* CRITICAL for absolute chart visibility */
+    overflow: hidden;
+    /* Lock header/footer, scroll middle */
     height: 100%;
 }
 
@@ -205,21 +262,23 @@ main {
     display: flex;
     flex-direction: column;
     padding: 15px 20px;
-    /* Reduced padding */
     gap: 12px;
-    /* Reduced gap */
     position: relative;
-    overflow: visible;
+    overflow-y: auto;
+    /* Central content scrolls if needed */
+    -webkit-overflow-scrolling: touch;
 }
 
 .patient-visual {
     width: 100%;
-    height: 320px;
-    /* Further reduced to guarantee choice visibility */
+    height: 420px;
+    /* Strong sprite presence */
     display: flex;
     flex-direction: row;
     gap: 20px;
     position: relative;
+    flex-shrink: 0;
+    /* Prevent squashing in narrow viewports */
 }
 
 .img-column {
@@ -241,22 +300,21 @@ main {
     /* Ensure visible */
 }
 
-/* PC Side Chart Fix - Moved to the LEFT side relative to app-container (middle) */
-/* PC Side Chart Fix - Positioned to the RIGHT to clear the waiting room */
+/* Patient Chart - Side column on PC */
 .patient-chart {
-    position: absolute;
-    top: 250px;
-    right: -285px;
-    /* Stand to the RIGHT of the main middle container */
     width: 260px;
     background: #fff;
     color: #000;
-    padding: 1.2rem;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     border-left: 6px solid var(--accent-teal);
-    z-index: 100;
+    z-index: 10;
     font-family: monospace;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 80px;
+    /* Offset for header alignment */
 }
 
 .chart-header {
@@ -368,6 +426,28 @@ footer {
         width: 100vw;
         flex-direction: column;
         gap: 0;
+        overflow: hidden;
+    }
+
+    /* Hide the global PC chart and show the mobile version */
+    .patient-chart {
+        position: absolute;
+        top: 85px;
+        /* Just below mobile wait-room */
+        right: 10px;
+        width: 160px;
+        padding: 0.8rem;
+        font-size: 0.8rem;
+        z-index: 1000;
+        margin-top: 0;
+        background: rgba(255, 255, 255, 0.95);
+        border-left-width: 4px;
+        pointer-events: none;
+        /* Don't block clicking patient */
+    }
+
+    .patient-chart .val {
+        font-size: 0.8rem;
     }
 
     .waiting-room {

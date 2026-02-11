@@ -59,13 +59,15 @@
             </ul>
             <div class="wr-status" id="wr-status">평화롭습니다</div>
 
-            <!-- Doctor Avatar Moved Here -->
-            <div class="doctor-sidebar-container">
-                <div class="doctor-avatar-container" id="doctor-container">
+            <!-- Doctor Area -->
+            <div class="doctor-sidebar-container" id="doctor-container">
+                <div class="doctor-avatar-container">
                     <img src="assets/doctor.png" alt="Doctor" id="doctor-img">
                     <div id="doctor-emoji" class="reaction-emoji">💬</div>
-                    <div id="hint-bubble" class="hidden">힌트...</div>
                 </div>
+                <!-- Bubble outside container for visibility -->
+                <div id="hint-bubble" class="hidden">힌트...</div>
+
                 <div class="doctor-info-mini">
                     <div class="revenue-display">
                         <span id="revenue-amount">0</span>
@@ -133,26 +135,6 @@
                         </div>
                         <div id="patient-img" class="character-img" role="img" aria-label="Patient Character"></div>
                     </div>
-
-                    <!-- Patient Chart (New Location for Layout Control) -->
-                    <div class="patient-chart" id="sidebar-chart">
-                        <div class="chart-header">
-                            <span id="p-name">-</span>
-                            <span id="p-info">(-/-)</span>
-                        </div>
-                        <div class="chart-body">
-                            <div class="vital-row"><span class="label">BP</span> <span id="p-bp" class="val">-/-</span>
-                            </div>
-                            <div class="vital-row"><span class="label">HR</span> <span id="p-hr" class="val">-</span>
-                            </div>
-                            <div class="vital-row"><span class="label">BT</span> <span id="p-bt" class="val">-</span>
-                            </div>
-                            <div class="history-row">
-                                <span class="label">특이사항</span>
-                                <span id="p-history" class="val warning-text">-</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="info-column">
@@ -170,125 +152,134 @@
                     <button class="choice-btn">거절하고 설명한다</button>
                 </div>
             </footer>
+        </div>
 
-            <!-- Intro Overlay -->
-            <div id="intro-overlay" class="modal-overlay">
-                <div class="modal intro-content">
-                    <div class="intro-header">
-                        <img src="assets/doctor.png" alt="Doctor" class="intro-doctor-img"
-                            style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;">
-                        <h2>월요일 아침 8시 55분</h2>
-                    </div>
-                    <div class="intro-text">
-                        <p>"하아..."</p>
-                        <p>깊은 한숨과 함께 믹스커피를 털어 넣는다.</p>
-                        <p><strong>개원 대출 금리 6.5%</strong>. 이번 달 임대료와 직원 월급을 맞추려면...</p>
-                        <p class="highlight">오늘 최소 <span class="accent">20명</span>은 봐야 적자를 면한다.</p>
-                        <p>밖에서 환자들의 웅성거리는 소리가 들려온다.</p>
-                    </div>
-                    <button id="start-game-btn" class="primary-btn pulse">진료 시작하기</button>
+        <!-- Patient Chart Sidebar -->
+        <div class="patient-chart" id="sidebar-chart">
+            <div class="chart-header">
+                <span id="p-name">-</span>
+                <span id="p-info">(-/-)</span>
+            </div>
+            <div class="chart-body">
+                <div class="vital-row"><span class="label">BP</span> <span id="p-bp" class="val">-/-</span></div>
+                <div class="vital-row"><span class="label">HR</span> <span id="p-hr" class="val">-</span></div>
+                <div class="vital-row"><span class="label">BT</span> <span id="p-bt" class="val">-</span></div>
+                <div class="history-row">
+                    <span class="label">특이사항</span>
+                    <span id="p-history" class="val warning-text">-</span>
                 </div>
             </div>
+        </div>
+    </div> <!-- end game-wrapper -->
 
-            <!-- Tutorial Modal -->
-            <div id="tutorial-modal" class="hidden">
-                <div class="modal tutorial-content">
-                    <h2><span class="icon">📋</span> 진료 가이드</h2>
-                    <div class="tutorial-grid">
-                        <div class="t-item">
-                            <span class="t-icon">❤️</span>
-                            <div class="t-desc">
-                                <strong>체력 (HP)</strong>
-                                <p>0이 되면 과로로 쓰러집니다. (번아웃 엔딩)</p>
-                            </div>
-                        </div>
-                        <div class="t-item">
-                            <span class="t-icon">🧠</span>
-                            <div class="t-desc">
-                                <strong>멘탈 (Mental)</strong>
-                                <p>진상 환자에게 털리면 감소. 0이 되면 미쳐버립니다.</p>
-                            </div>
-                        </div>
-                        <div class="t-item">
-                            <span class="t-icon">⚖️</span>
-                            <div class="t-desc">
-                                <strong>행정 리스크</strong>
-                                <p>편법/불법 처방 시 증가. 100이 되면 감사가 나옵니다.</p>
-                            </div>
-                        </div>
-                        <div class="t-item">
-                            <span class="t-icon">⭐</span>
-                            <div class="t-desc">
-                                <strong>환자 만족도</strong>
-                                <p>너무 낮으면 난동을 부리지만, 높다고 돈이 되진 않습니다.</p>
-                            </div>
-                        </div>
+    <!-- Overlays -->
+    <div id="intro-overlay" class="modal-overlay">
+        <div class="modal intro-content">
+            <div class="intro-header">
+                <img src="assets/doctor.png" alt="Doctor" class="intro-doctor-img"
+                    style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;">
+                <h2>월요일 아침 8시 55분</h2>
+            </div>
+            <div class="intro-text">
+                <p>"하아..."</p>
+                <p>깊은 한숨과 함께 믹스커피를 털어 넣는다.</p>
+                <p><strong>개원 대출 금리 6.5%</strong>. 이번 달 임대료와 직원 월급을 맞추려면...</p>
+                <p class="highlight">오늘 최소 <span class="accent">20명</span>은 봐야 적자를 면한다.</p>
+                <p>밖에서 환자들의 웅성거리는 소리가 들려온다.</p>
+            </div>
+            <button id="start-game-btn" class="primary-btn pulse">진료 시작하기</button>
+        </div>
+    </div>
+
+    <!-- Tutorial Modal -->
+    <div id="tutorial-modal" class="hidden">
+        <div class="modal tutorial-content">
+            <h2><span class="icon">📋</span> 진료 가이드</h2>
+            <div class="tutorial-grid">
+                <div class="t-item">
+                    <span class="t-icon">❤️</span>
+                    <div class="t-desc">
+                        <strong>체력 (HP)</strong>
+                        <p>0이 되면 과로로 쓰러집니다. (번아웃 엔딩)</p>
                     </div>
-                    <div class="tutorial-footer">
-                        <p>※ 모든 선택은 당신의 책임입니다. 행운을 빕니다, 원장님.</p>
-                        <button id="close-tutorial" class="primary-btn">가이드 닫기</button>
+                </div>
+                <div class="t-item">
+                    <span class="t-icon">🧠</span>
+                    <div class="t-desc">
+                        <strong>멘탈 (Mental)</strong>
+                        <p>진상 환자에게 털리면 감소. 0이 되면 미쳐버립니다.</p>
+                    </div>
+                </div>
+                <div class="t-item">
+                    <span class="t-icon">⚖️</span>
+                    <div class="t-desc">
+                        <strong>행정 리스크</strong>
+                        <p>편법/불법 처방 시 증가. 100이 되면 감사가 나옵니다.</p>
+                    </div>
+                </div>
+                <div class="t-item">
+                    <span class="t-icon">⭐</span>
+                    <div class="t-desc">
+                        <strong>환자 만족도</strong>
+                        <p>너무 낮으면 난동을 부리지만, 높다고 돈이 되진 않습니다.</p>
                     </div>
                 </div>
             </div>
-
-            <!-- Overlays for Endings -->
-            <div id="overlay" class="hidden">
-                <div class="modal">
-                    <h2 id="ending-title">게임 오버</h2>
-                    <p id="ending-desc">...</p>
-                    <p class="disclaimer">※ 이 게임의 어떤 결과도 의료 과실을 의미하지 않습니다.</p>
-                    <button id="restart-btn" class="primary-btn">다시 시작하기</button>
-                </div>
+            <div class="tutorial-footer">
+                <p>※ 모든 선택은 당신의 책임입니다. 행운을 빕니다, 원장님.</p>
+                <button id="close-tutorial" class="primary-btn">가이드 닫기</button>
             </div>
-            <!-- Admin Mode Overlay -->
-            <div id="admin-mode-overlay" class="hidden">
-                <div class="admin-panel">
-                    <div class="admin-header">
-                        <h2>🛠️ 시나리오 편집기 (Admin)</h2>
-                        <button id="close-admin">X</button>
-                    </div>
-                    <div class="admin-content">
-                        <div class="scenario-list-panel">
-                            <h3>Case List</h3>
-                            <ul id="admin-scenario-list"></ul>
-                            <button id="add-scenario-btn" class="secondary-btn">+ New Case</button>
-                        </div>
-                        <div class="editor-panel">
-                            <h3>Editor</h3>
-                            <div id="editor-form">
-                                <label>ID: <input type="text" id="edit-id" readonly></label>
-                                <label>Image Path: <input type="text" id="edit-image"></label>
-                                <label>Dialog: <textarea id="edit-text"></textarea></label>
-                                <label>Age: <input type="number" id="edit-age"></label>
-                                <label>Gender: <select id="edit-gender">
-                                        <option value="M">M</option>
-                                        <option value="F">F</option>
-                                    </select></label>
-                                <div class="vitals-edit">
-                                    <label>BP: <input type="text" id="edit-bp"></label>
-                                    <label>HR: <input type="number" id="edit-hr"></label>
-                                    <label>BT: <input type="number" step="0.1" id="edit-bt"></label>
-                                </div>
-                                <div class="choices-edit-panel">
-                                    <h3>Choices & Effects</h3>
-                                    <div id="edit-choices-list">
-                                        <!-- Dynamic rows for choices -->
-                                    </div>
-                                </div>
-                                <div class="admin-actions">
-                                    <button id="save-scenario-btn" class="primary-btn">저장 (LocalStorage)</button>
-                                    <button id="export-data-btn" class="secondary-btn">데이터 추출 (JSON)</button>
-                                </div>
-                            </div>
-                        </div>
+        </div>
+    </div>
+
+    <!-- Overlays for Endings -->
+    <div id="overlay" class="hidden">
+        <div class="modal">
+            <h2 id="ending-title">게임 오버</h2>
+            <p id="ending-desc">...</p>
+            <p class="disclaimer">※ 이 게임의 어떤 결과도 의료 과실을 의미하지 않습니다.</p>
+            <button id="restart-btn" class="primary-btn">다시 시작하기</button>
+        </div>
+    </div>
+
+    <!-- Admin Mode Overlay -->
+    <div id="admin-mode-overlay" class="hidden">
+        <div class="admin-panel">
+            <div class="admin-header">
+                <h2>🛠️ 시나리오 편집기 (Admin)</h2>
+                <button id="close-admin">X</button>
+            </div>
+            <div class="admin-content">
+                <div class="scenario-list-panel">
+                    <h3>Case List</h3>
+                    <ul id="admin-scenario-list"></ul>
+                    <button id="add-scenario-btn" class="secondary-btn">+ New Case</button>
+                </div>
+                <div class="editor-panel">
+                    <h3>Editor</h3>
+                    <div id="editor-form">
+                        <label>ID: <input type="text" id="edit-id" readonly></label>
+                        <label>Image Path: <input type="text" id="edit-image"></label>
+                        <label>Dialog: <textarea id="edit-text"></textarea></label>
+                        <label>Age: <input type="number" id="edit-age"></label>
+                        <label>Gender: <select id="edit-gender">
+                                <option value="M">M</option>
+                                <option value="F">F</option>
+                            </select></label>
+                        <label>BP: <input type="text" id="edit-bp"></label>
+                        <label>HR: <input type="number" id="edit-hr"></label>
+                        <label>BT: <input type="number" step="0.1" id="edit-bt"></label>
+                        <div id="edit-choices-list"></div>
+                        <button id="save-scenario-btn" class="primary-btn">Save Changes</button>
+                        <button id="export-data-btn" class="secondary-btn">Export data.js</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script src="data.js"></script>
-        <script src="scenario_manager.js"></script>
-        <script src="game.js"></script>
+    <script src="data.js"></script>
+    <script src="game.js"></script>
 </body>
 
 </html>
