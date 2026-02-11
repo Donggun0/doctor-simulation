@@ -201,8 +201,8 @@ body {
     flex-direction: column;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     position: relative;
-    overflow: hidden;
-    /* Lock header/footer, scroll middle */
+    overflow: visible;
+    /* Allow chart to pop out as sidebar on PC */
     height: 100%;
 }
 
@@ -271,14 +271,13 @@ main {
 
 .patient-visual {
     width: 100%;
-    height: 420px;
-    /* Strong sprite presence */
+    height: 320px;
+    /* Reduced to fit better vertically on PC */
     display: flex;
     flex-direction: row;
     gap: 20px;
     position: relative;
     flex-shrink: 0;
-    /* Prevent squashing in narrow viewports */
 }
 
 .img-column {
@@ -300,21 +299,20 @@ main {
     /* Ensure visible */
 }
 
-/* Patient Chart - Side column on PC */
+/* Patient Chart - Positioned as sidebar on PC */
 .patient-chart {
+    position: absolute;
+    left: calc(100% + 40px);
+    top: -50px;
     width: 260px;
     background: #fff;
     color: #000;
-    padding: 1.5rem;
+    padding: 1.25rem;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     border-left: 6px solid var(--accent-teal);
-    z-index: 10;
+    z-index: 20;
     font-family: monospace;
-    flex-shrink: 0;
-    align-self: flex-start;
-    margin-top: 80px;
-    /* Offset for header alignment */
 }
 
 .chart-header {
@@ -356,15 +354,15 @@ main {
 .dialogue-box {
     background: #fff;
     color: #1a1a1a;
-    padding: 1.5rem;
+    padding: 1.25rem;
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    min-height: 120px;
+    min-height: 100px;
+    /* Reduced for vertical fit */
     display: flex;
     flex-direction: column;
     justify-content: center;
     max-width: 440px;
-    /* tighten up text breadth for easier reading */
     margin: 0 auto;
     width: 100%;
 }
@@ -429,40 +427,21 @@ footer {
         overflow: hidden;
     }
 
-    /* Hide the global PC chart and show the mobile version */
-    .patient-chart {
-        position: absolute;
-        top: 85px;
-        /* Just below mobile wait-room */
-        right: 10px;
-        width: 160px;
-        padding: 0.8rem;
-        font-size: 0.8rem;
-        z-index: 1000;
-        margin-top: 0;
-        background: rgba(255, 255, 255, 0.95);
-        border-left-width: 4px;
-        pointer-events: none;
-        /* Don't block clicking patient */
-    }
-
-    .patient-chart .val {
-        font-size: 0.8rem;
-    }
-
     .waiting-room {
         width: 100%;
-        height: 70px;
-        position: relative;
-        /* Remove fixed */
-        bottom: auto;
-        left: auto;
+        height: 60px;
+        flex-shrink: 0;
+        background: var(--card-bg);
+        border: none;
+        border-bottom: 1px solid #333;
+        padding: 5px 15px;
         border-radius: 0;
         flex-direction: row;
-        padding: 5px 10px;
-        z-index: 100;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
-        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        order: 1;
+        /* Keep at top */
     }
 
     .waiting-room .wr-header,
@@ -474,110 +453,63 @@ footer {
     .waiting-room .patient-list {
         display: flex;
         flex-direction: row;
-        gap: 10px;
-        align-items: center;
+        gap: 8px;
         margin: 0;
-    }
-
-    .waiting-room .patient-list li {
-        white-space: nowrap;
-        padding: 5px 12px;
-        background: #222;
-        border-radius: 15px;
-        border: 1px solid #444;
+        overflow-x: auto;
+        padding: 5px 0;
     }
 
     .app-container {
         flex: 1;
-        /* Take remaining height above waiting-room */
-        width: 100%;
-        max-width: none;
-        border: none;
+        max-width: 100%;
         border-radius: 0;
-        padding-bottom: 0;
+        border: none;
+        order: 2;
+        /* Middle */
         overflow: hidden;
-        display: flex;
-        flex-direction: column;
     }
 
     main {
+        padding: 10px;
+        gap: 10px;
         overflow-y: auto;
-        /* Scrollable main area */
-        -webkit-overflow-scrolling: touch;
-        flex: 1;
-        /* Take remaining space */
-        padding-bottom: 20px;
     }
 
-    footer {
-        flex-shrink: 0;
-        background: #252525;
-        z-index: 10;
-        padding: 10px 15px;
-        border-top: 1px solid #444;
-    }
-
-    .choice-btn {
-        padding: 0.8rem !important;
-        font-size: 0.95rem !important;
-    }
-
-    /* Core Side-by-Side Mobile Fix */
     .patient-visual {
-        height: 35vh;
-        /* Enough height for visible content */
-        display: flex !important;
+        height: auto;
+        min-height: 200px;
         flex-direction: row !important;
-        /* Force side-by-side */
-        gap: 12px;
-        margin-bottom: 10px;
+        gap: 10px;
     }
 
     .img-column {
-        flex: 1;
-        width: 48%;
+        flex: 1.2;
+        width: auto;
     }
 
     .patient-chart {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        width: 48% !important;
-        height: 100% !important;
-        margin: 0 !important;
-        box-shadow: none !important;
-        background: #fff;
-        padding: 10px !important;
-        font-size: 0.8rem !important;
-        border-radius: 8px !important;
-    }
-
-    .info-column {
+        position: static !important;
         flex: 1;
-        width: 100%;
+        width: auto !important;
+        padding: 10px !important;
+        margin-top: 0 !important;
+        font-size: 0.8rem;
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.95);
+        border-left: 3px solid var(--accent-teal);
+        height: min-content;
     }
 
     .dialogue-box {
+        min-height: 80px;
         padding: 12px;
-        min-height: 100px;
-        max-height: 140px;
-        border: 2px solid var(--accent-teal);
+        max-height: none;
     }
 
-    #patient-dialogue {
-        font-size: 1rem;
-    }
-
-    header {
+    footer {
+        order: 3;
+        /* Bottom */
         padding: 10px 15px;
-    }
-
-    .top-bar {
-        margin-bottom: 8px;
-    }
-
-    .stat-item .mini-bar {
-        height: 6px;
     }
 }
 
