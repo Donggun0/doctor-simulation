@@ -32,14 +32,16 @@ body {
 
 .game-wrapper {
     display: flex;
-    gap: 20px;
+    gap: 30px;
     width: 100%;
-    max-width: 1200px;
-    /* Allow more space on PC */
+    max-width: 1300px;
+    /* Slightly wider to accommodate side elements */
     height: 95vh;
     justify-content: center;
     align-items: stretch;
     padding: 20px;
+    flex-direction: row;
+    /* Default PC row */
 }
 
 /* Sidebar (Waiting Room) - PC */
@@ -53,6 +55,8 @@ body {
     padding: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     z-index: 10;
+    order: 2;
+    /* Move waiting room to the RIGHT of app-container on PC */
 }
 
 .wr-header {
@@ -138,7 +142,8 @@ body {
 .app-container {
     flex: 1;
     max-width: 500px;
-    /* narrower for focus and readability */
+    order: 1;
+    /* Main content in middle */
     background: var(--card-bg);
     border: 1px solid #333;
     border-radius: 16px;
@@ -214,8 +219,8 @@ main {
 
 .patient-visual {
     width: 100%;
-    height: 480px;
-    /* taller image area on PC */
+    height: 400px;
+    /* Reduced to ensure choices aren't cut off */
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -241,12 +246,12 @@ main {
     /* Ensure visible */
 }
 
-/* PC Side Chart Fix - Moved to the RIGHT to ensure visibility */
+/* PC Side Chart Fix - Moved to the LEFT side relative to app-container (middle) */
 .patient-chart {
     position: absolute;
-    top: 250px;
-    right: -285px;
-    /* Stand to the right of the app container */
+    top: 280px;
+    left: -285px;
+    /* Stand to the LEFT of the main middle container */
     width: 260px;
     background: #fff;
     color: #000;
